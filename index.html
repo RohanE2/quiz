@@ -1,6 +1,2341 @@
-/* Media query for screens 360px and smaller */
-@media (max-width: 360px) {
-  .logo-badge {
-    display: block; /* Changed from none to block */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOVEXAM — Master the Civil Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080b10;
+  --surface: #0f1318;
+  --surface2: #161b24;
+  --surface3: #1e2530;
+  --border: #252d3d;
+  --border2: #2e3a50;
+  --accent: #f5c518;
+  --accent2: #1a6fff;
+  --accent3: #ff6b35;
+  --success: #00d68f;
+  --danger: #ff3b5c;
+  --purple: #a855f7;
+  --cyan: #06b6d4;
+  --text: #e2e8f4;
+  --muted: #5a6680;
+  --muted2: #7a8aaa;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;overflow-x:hidden;cursor:none;}
+
+/* CUSTOM CURSOR */
+.cursor{position:fixed;width:8px;height:8px;background:var(--accent);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);}
+.cursor-ring{position:fixed;width:28px;height:28px;border:1px solid var(--accent);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.12s ease;clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px);}
+
+/* SCANLINE OVERLAY */
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:1000;}
+
+/* GRID BG */
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(26,111,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(26,111,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+
+/* ===================== HEADER ===================== */
+header{
+  background:rgba(8,11,16,0.97);
+  border-bottom:2px solid var(--border);
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:60px;
+  position:sticky;
+  top:0;
+  z-index:200;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  gap:12px;
+}
+
+/* LOGO */
+.logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;
+  letter-spacing:4px;
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  gap:7px;
+  cursor:pointer;
+  flex-shrink:0;
+  text-decoration:none;
+}
+.logo-badge{
+  background:var(--accent);
+  color:#000;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:8px;
+  font-weight:600;
+  padding:2px 5px;
+  letter-spacing:1px;
+  flex-shrink:0;
+}
+
+/* DESKTOP NAV — center */
+nav{
+  display:flex;
+  gap:0;
+  flex:1;
+  justify-content:center;
+  overflow:hidden;
+}
+.nav-btn{
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px;
+  font-weight:600;
+  letter-spacing:0.8px;
+  padding:6px 10px;
+  cursor:pointer;
+  text-transform:uppercase;
+  transition:color 0.15s;
+  position:relative;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.nav-btn:hover{color:var(--text);}
+.nav-btn.active{color:var(--accent);}
+.nav-btn.active::after{
+  content:'';
+  position:absolute;
+  bottom:-2px;
+  left:0;right:0;
+  height:2px;
+  background:var(--accent);
+}
+.nav-dot{
+  position:absolute;
+  top:3px;right:3px;
+  width:5px;height:5px;
+  background:var(--danger);
+  border-radius:50%;
+}
+
+/* HEADER RIGHT */
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+}
+.xp-bar-mini{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  color:var(--accent);
+}
+.xp-bar-track{width:70px;height:3px;background:var(--surface2);}
+.xp-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));transition:width 0.5s ease;}
+.streak-badge{
+  display:flex;align-items:center;gap:4px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  color:var(--accent3);
+  background:rgba(255,107,53,0.1);
+  border:1px solid rgba(255,107,53,0.3);
+  padding:4px 9px;
+  white-space:nowrap;
+}
+.level-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  background:rgba(245,197,24,0.1);
+  border:1px solid rgba(245,197,24,0.3);
+  color:var(--accent);
+  padding:4px 9px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+/* HAMBURGER — hidden on desktop */
+.hamburger{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  width:38px;height:38px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  cursor:pointer;
+  flex-shrink:0;
+  padding:0;
+}
+.hamburger span{
+  display:block;
+  width:18px;height:2px;
+  background:var(--text);
+  transition:all 0.25s ease;
+  transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* MOBILE DRAWER */
+.mobile-drawer{
+  display:none;
+  position:fixed;
+  top:60px;left:0;right:0;
+  background:rgba(8,11,16,0.98);
+  border-bottom:2px solid var(--border);
+  z-index:199;
+  padding:8px 0 12px;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  transform:translateY(-110%);
+  transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-drawer.open{transform:translateY(0);}
+.drawer-nav{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  padding:0 12px;
+  margin-bottom:12px;
+}
+.drawer-nav-btn{
+  background:none;
+  border:none;
+  color:var(--muted2);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:1px;
+  padding:12px 14px;
+  cursor:pointer;
+  text-transform:uppercase;
+  text-align:left;
+  border-left:2px solid transparent;
+  transition:all 0.15s;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.drawer-nav-btn:hover{color:var(--text);background:var(--surface2);}
+.drawer-nav-btn.active{color:var(--accent);border-left-color:var(--accent);background:rgba(245,197,24,0.04);}
+.drawer-stats-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding:10px 16px 0;
+  border-top:1px solid var(--border);
+}
+.drawer-stat{text-align:center;}
+.drawer-stat-val{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--accent);}
+.drawer-stat-key{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+
+/* MOBILE BOTTOM BAR — appears on mobile */
+.bottom-bar{
+  display:none;
+  position:fixed;
+  bottom:0;left:0;right:0;
+  height:58px;
+  background:rgba(8,11,16,0.98);
+  border-top:2px solid var(--border);
+  z-index:198;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.bottom-bar-inner{
+  display:flex;
+  height:100%;
+}
+.bb-btn{
+  flex:1;
+  background:none;
+  border:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  cursor:pointer;
+  transition:all 0.15s;
+  padding:0;
+  border-top:2px solid transparent;
+  position:relative;
+}
+.bb-btn.active{border-top-color:var(--accent);}
+.bb-icon{font-size:18px;line-height:1;}
+.bb-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.5px;
+  color:var(--muted);
+  text-transform:uppercase;
+  line-height:1;
+}
+.bb-btn.active .bb-label{color:var(--accent);}
+.bb-dot{
+  position:absolute;
+  top:6px;right:calc(50% - 14px);
+  width:5px;height:5px;
+  background:var(--danger);
+  border-radius:50%;
+}
+
+/* LAYOUT */
+main{max-width:1200px;margin:0 auto;padding:32px 20px;position:relative;z-index:1;}
+/* safe area for notched phones */
+@supports(padding-bottom:env(safe-area-inset-bottom)){
+  .bottom-bar{padding-bottom:env(safe-area-inset-bottom);}
+  @media(max-width:640px){main{padding-bottom:calc(74px + env(safe-area-inset-bottom));}}
+}
+.screen{display:none;animation:fadeIn 0.3s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.page-header{margin-bottom:32px;}
+.page-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--accent);text-transform:uppercase;margin-bottom:8px;}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,72px);letter-spacing:4px;line-height:1;color:var(--text);}
+.page-title span{color:var(--accent);}
+
+/* BUTTONS */
+.btn{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px 24px;border:none;cursor:pointer;transition:all 0.15s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));display:inline-flex;align-items:center;gap:8px;}
+.btn-primary{background:var(--accent);color:#000;}
+.btn-primary:hover{background:#ffd84a;transform:translateY(-2px);}
+.btn-secondary{background:var(--surface2);color:var(--text);clip-path:none;border:2px solid var(--border2);}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+.btn-danger{background:var(--danger);color:#fff;}
+.btn-sm{padding:8px 16px;font-size:10px;}
+.btn-accent2{background:var(--accent2);color:#fff;}
+.btn-accent3{background:var(--accent3);color:#fff;}
+.btn-purple{background:var(--purple);color:#fff;}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);padding:20px;transition:border-color 0.2s;}
+.card:hover{border-color:var(--border2);}
+.card-sharp{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);}
+
+/* HOME SCREEN */
+.home-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;margin-bottom:20px;}
+.home-main{}
+.home-side{}
+
+/* HERO BANNER */
+.hero-banner{background:linear-gradient(135deg,#0a0e16 0%,#0d1525 50%,#0a0c14 100%);border:1px solid var(--border2);padding:36px;margin-bottom:20px;position:relative;overflow:hidden;clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,0 100%);}
+.hero-banner::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(245,197,24,0.08) 0%,transparent 70%);}
+.hero-banner::after{content:'UPSC SSC BANKING RAILWAYS';position:absolute;bottom:12px;right:20px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--border2);text-transform:uppercase;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,80px);letter-spacing:4px;line-height:1;margin-bottom:12px;}
+.hero-title .line2{color:var(--accent);}
+.hero-sub{font-size:13px;color:var(--muted2);margin-bottom:24px;max-width:480px;line-height:1.6;}
+.hero-stats{display:flex;gap:24px;margin-bottom:24px;}
+.hero-stat{text-align:center;}
+.hero-stat-val{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--accent);letter-spacing:2px;}
+.hero-stat-key{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.hero-buttons{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* DAILY CHALLENGE */
+.daily-card{background:linear-gradient(135deg,#0d1a2e,#0a1020);border:2px solid var(--accent2);padding:20px;margin-bottom:16px;position:relative;overflow:hidden;}
+.daily-card::before{content:'TODAY';position:absolute;top:8px;right:12px;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--accent2);}
+.daily-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--accent2);margin-bottom:8px;text-transform:uppercase;}
+.daily-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;margin-bottom:8px;}
+.daily-meta{font-size:12px;color:var(--muted2);margin-bottom:16px;}
+.daily-countdown{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:8px;}
+
+/* QUICK PLAY */
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.quick-card{background:var(--surface2);border:1px solid var(--border);padding:16px;cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden;}
+.quick-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.quick-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.2s;}
+.quick-card.qc-blue::before{background:linear-gradient(135deg,rgba(26,111,255,0.1),transparent);}
+.quick-card.qc-orange::before{background:linear-gradient(135deg,rgba(255,107,53,0.1),transparent);}
+.quick-card.qc-green::before{background:linear-gradient(135deg,rgba(0,214,143,0.1),transparent);}
+.quick-card.qc-purple::before{background:linear-gradient(135deg,rgba(168,85,247,0.1),transparent);}
+.quick-card:hover::before{opacity:1;}
+.quick-icon{font-size:24px;margin-bottom:8px;}
+.quick-label{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:1px;color:var(--text);margin-bottom:2px;}
+.quick-sub{font-size:11px;color:var(--muted);}
+
+/* ACTIVITY FEED */
+.activity-feed{background:var(--surface);border:1px solid var(--border);overflow:hidden;}
+.activity-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.activity-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;}
+.live-dot{width:6px;height:6px;background:var(--success);border-radius:50%;animation:livepulse 1.5s infinite;}
+@keyframes livepulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,214,143,0.4);}50%{opacity:0.7;box-shadow:0 0 0 4px rgba(0,214,143,0);}}
+.feed-list{max-height:280px;overflow:hidden;position:relative;}
+.feed-item{padding:10px 16px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted2);display:flex;align-items:center;gap:8px;animation:feedSlide 0.4s ease;}
+@keyframes feedSlide{from{opacity:0;transform:translateX(-10px);}to{opacity:1;transform:translateX(0);}}
+.feed-avatar{width:24px;height:24px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;clip-path:polygon(4px 0,calc(100% - 4px) 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.feed-item strong{color:var(--text);}
+.feed-score{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--success);}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);padding:16px;text-align:center;transition:all 0.2s;cursor:pointer;}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;line-height:1;}
+.stat-val.gold{color:var(--accent);}
+.stat-val.blue{color:var(--accent2);}
+.stat-val.green{color:var(--success);}
+.stat-val.orange{color:var(--accent3);}
+.stat-key{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:4px;}
+
+/* CATEGORY GRID */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:20px;}
+.cat-card{background:var(--surface);border:1px solid var(--border);padding:18px 16px;cursor:pointer;transition:all 0.15s;position:relative;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);}
+.cat-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+.cat-card.selected{border-color:var(--accent);background:rgba(245,197,24,0.05);}
+.cat-icon{font-size:26px;margin-bottom:8px;}
+.cat-name{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.cat-sub{font-size:11px;color:var(--muted);}
+.cat-card.selected .cat-name{color:var(--accent);}
+.cat-mastery{height:2px;background:var(--border);margin-top:10px;}
+.cat-mastery-fill{height:100%;background:var(--accent);transition:width 0.6s ease;}
+
+/* SETTINGS ROW */
+.settings-block{background:var(--surface);border:1px solid var(--border);padding:16px 20px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+.settings-label{font-size:14px;font-weight:500;}
+.settings-sub{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace;}
+.toggle{width:40px;height:22px;background:var(--border);border:none;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0;}
+.toggle.on{background:var(--accent);}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;transition:left 0.2s;clip-path:polygon(2px 0,calc(100% - 2px) 0,100% 2px,100% calc(100% - 2px),calc(100% - 2px) 100%,2px 100%,0 calc(100% - 2px),0 2px);}
+.toggle.on::after{left:21px;}
+
+/* DIFF / COUNT BTNS */
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all 0.15s;}
+.chip:hover{border-color:var(--border2);color:var(--text);}
+.chip.sel{background:rgba(245,197,24,0.1);border-color:var(--accent);color:var(--accent);}
+.chip.sel.easy{background:rgba(0,214,143,0.1);border-color:var(--success);color:var(--success);}
+.chip.sel.medium{background:rgba(245,197,24,0.1);border-color:var(--accent);color:var(--accent);}
+.chip.sel.hard{background:rgba(255,59,92,0.1);border-color:var(--danger);color:var(--danger);}
+
+/* QUIZ SCREEN */
+.quiz-wrap{max-width:800px;margin:0 auto;}
+.quiz-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.quiz-progress-wrap{margin-bottom:24px;}
+.quiz-progress-bg{height:3px;background:var(--surface2);}
+.quiz-progress-fg{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width 0.4s ease;}
+.combo-bar{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.combo-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+.combo-count{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--accent3);letter-spacing:2px;}
+.combo-fire{animation:fireShake 0.3s ease;}
+@keyframes fireShake{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+
+.q-card{background:var(--surface);border:1px solid var(--border);padding:28px;margin-bottom:16px;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);}
+.q-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:10px;}
+.q-text{font-size:19px;font-weight:500;line-height:1.6;color:var(--text);}
+
+.options{display:grid;gap:8px;margin-bottom:16px;}
+.opt{background:var(--surface);border:1px solid var(--border);padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all 0.15s;font-size:14px;}
+.opt:hover:not(.disabled){border-color:var(--accent2);background:rgba(26,111,255,0.05);}
+.opt.selected{border-color:var(--accent2);background:rgba(26,111,255,0.08);}
+.opt.correct{border-color:var(--success)!important;background:rgba(0,214,143,0.08)!important;}
+.opt.wrong{border-color:var(--danger)!important;background:rgba(255,59,92,0.08)!important;}
+.opt.disabled{cursor:not-allowed;}
+.opt-key{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;width:26px;height:26px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;}
+.opt.selected .opt-key{border-color:var(--accent2);background:var(--accent2);color:#fff;}
+.opt.correct .opt-key{border-color:var(--success);background:var(--success);color:#000;}
+.opt.wrong .opt-key{border-color:var(--danger);background:var(--danger);color:#fff;}
+
+.exp-box{background:var(--surface2);border-left:3px solid var(--accent2);padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--muted2);display:none;line-height:1.6;}
+.exp-box.show{display:block;animation:fadeIn 0.3s ease;}
+.exp-box strong{color:var(--text);display:block;margin-bottom:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;}
+
+.quiz-actions{display:flex;gap:10px;justify-content:flex-end;align-items:center;}
+.timer-ring{position:relative;width:48px;height:48px;flex-shrink:0;}
+.timer-svg{transform:rotate(-90deg);}
+.timer-circle{fill:none;stroke:var(--border);stroke-width:3;}
+.timer-progress{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:butt;transition:stroke-dashoffset 1s linear,stroke 0.3s;}
+.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;}
+
+/* STREAK POPUP */
+.combo-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:var(--surface);border:3px solid var(--accent3);padding:20px 40px;text-align:center;z-index:500;transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));}
+.combo-popup.show{transform:translate(-50%,-50%) scale(1);}
+.combo-popup-val{font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--accent3);letter-spacing:4px;line-height:1;}
+.combo-popup-text{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--accent3);}
+
+/* XP POPUP */
+.xp-popup{position:fixed;bottom:80px;right:24px;background:var(--surface);border:2px solid var(--accent);padding:12px 20px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);z-index:500;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);transform:translateX(200%);transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
+.xp-popup.show{transform:translateX(0);}
+
+/* RESULT SCREEN */
+.result-wrap{max-width:800px;margin:0 auto;}
+.result-hero{text-align:center;padding:40px 20px;border-bottom:1px solid var(--border);margin-bottom:32px;position:relative;}
+.result-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:200px;color:rgba(245,197,24,0.02);letter-spacing:10px;pointer-events:none;white-space:nowrap;}
+.score-display{position:relative;display:inline-block;margin-bottom:16px;}
+.score-num{font-family:'Bebas Neue',sans-serif;font-size:96px;letter-spacing:4px;line-height:1;}
+.score-num.pass{color:var(--success);}
+.score-num.fail{color:var(--danger);}
+.score-suffix{font-family:'Bebas Neue',sans-serif;font-size:40px;vertical-align:super;color:var(--muted);}
+.result-label{font-family:'IBM Plex Mono',monospace;font-size:14px;letter-spacing:4px;margin-bottom:8px;}
+.xp-earned{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--accent);letter-spacing:3px;margin-bottom:24px;}
+
+.result-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px;}
+.rs-box{background:var(--surface);border:1px solid var(--border);padding:16px;text-align:center;}
+.rs-val{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;line-height:1;}
+.rs-key{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:4px;}
+
+/* BADGES */
+.badges-unlocked{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;}
+.badge-item{background:var(--surface2);border:1px solid var(--border);padding:12px 16px;text-align:center;animation:badgePop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;}
+@keyframes badgePop{0%{transform:scale(0);opacity:0;}100%{transform:scale(1);opacity:1;}}
+.badge-icon{font-size:28px;margin-bottom:4px;}
+.badge-name{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--accent);text-transform:uppercase;}
+
+/* LEADERBOARD SCREEN */
+.lb-header{display:flex;gap:8px;margin-bottom:20px;}
+.lb-grid{display:grid;gap:6px;}
+.lb-row{background:var(--surface);border:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:16px;transition:border-color 0.2s;}
+.lb-row:hover{border-color:var(--border2);}
+.lb-row.top1{border-color:var(--accent);background:rgba(245,197,24,0.04);}
+.lb-row.top2{border-color:#9ca3af;background:rgba(156,163,175,0.04);}
+.lb-row.top3{border-color:#cd7f32;background:rgba(205,127,50,0.04);}
+.lb-row.is-you{border-color:var(--accent2);}
+.lb-rank{font-family:'Bebas Neue',sans-serif;font-size:24px;width:40px;text-align:center;flex-shrink:0;}
+.lb-row.top1 .lb-rank{color:var(--accent);}
+.lb-row.top2 .lb-rank{color:#9ca3af;}
+.lb-row.top3 .lb-rank{color:#cd7f32;}
+.lb-avatar{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--surface2);clip-path:polygon(6px 0,calc(100% - 6px) 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);}
+.lb-info{flex:1;}
+.lb-name{font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;}
+.lb-you-tag{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;color:var(--accent2);border:1px solid var(--accent2);padding:1px 5px;}
+.lb-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;}
+.lb-score{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent);letter-spacing:2px;}
+.lb-level{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-align:right;margin-top:2px;}
+
+/* ANALYTICS */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.analytics-card{background:var(--surface);border:1px solid var(--border);padding:20px;}
+.analytics-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
+.bar-chart{display:flex;flex-direction:column;gap:8px;}
+.bar-row{display:flex;align-items:center;gap:10px;}
+.bar-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);width:80px;flex-shrink:0;letter-spacing:0.5px;}
+.bar-track{flex:1;height:16px;background:var(--surface2);}
+.bar-fill{height:100%;transition:width 1s ease;}
+.bar-val{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text);width:36px;text-align:right;flex-shrink:0;}
+.heatmap-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.heat-cell{height:14px;background:var(--surface2);transition:background 0.3s;cursor:pointer;}
+.heat-cell.l1{background:rgba(0,214,143,0.2);}
+.heat-cell.l2{background:rgba(0,214,143,0.4);}
+.heat-cell.l3{background:rgba(0,214,143,0.6);}
+.heat-cell.l4{background:rgba(0,214,143,0.85);}
+.heat-cell:hover{outline:1px solid var(--accent);}
+.accuracy-circle{display:flex;align-items:center;gap:16px;}
+.circle-stat{text-align:center;}
+.circle-val{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:2px;}
+.circle-key{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.trend-line{height:60px;position:relative;overflow:hidden;}
+.trend-path{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:flex-end;gap:3px;height:100%;}
+.trend-bar{flex:1;background:linear-gradient(0deg,var(--accent2),rgba(26,111,255,0.3));transition:height 0.6s ease;}
+.weak-list{display:flex;flex-direction:column;gap:6px;}
+.weak-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--surface2);border-left:3px solid var(--danger);}
+.weak-name{font-size:12px;}
+.weak-acc{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--danger);}
+
+/* ACHIEVEMENTS */
+.achievements-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+.ach-card{background:var(--surface);border:1px solid var(--border);padding:20px;text-align:center;transition:all 0.2s;position:relative;overflow:hidden;}
+.ach-card.unlocked{border-color:var(--accent);cursor:pointer;}
+.ach-card.unlocked:hover{transform:translateY(-3px);}
+.ach-card.locked{opacity:0.4;}
+.ach-card.locked::after{content:'LOCKED';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);background:var(--surface);padding:4px 8px;border:1px solid var(--border);}
+.ach-icon{font-size:36px;margin-bottom:8px;display:block;}
+.ach-name{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--accent);text-transform:uppercase;margin-bottom:4px;}
+.ach-desc{font-size:11px;color:var(--muted);}
+.ach-card.unlocked .ach-desc{color:var(--muted2);}
+.ach-progress-bar{height:2px;background:var(--border);margin-top:10px;}
+.ach-progress-fill{height:100%;background:var(--accent);transition:width 0.8s ease;}
+
+/* FLASHCARDS */
+.flashcard-wrap{max-width:600px;margin:0 auto;text-align:center;}
+.flashcard{background:var(--surface);border:2px solid var(--border);padding:40px;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));margin-bottom:20px;position:relative;perspective:1000px;}
+.flashcard.flip{border-color:var(--accent);}
+.flashcard-side{width:100%;}
+.flashcard-front{}
+.flashcard-back{display:none;}
+.flashcard.flip .flashcard-front{display:none;}
+.flashcard.flip .flashcard-back{display:block;}
+.fc-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+.fc-text{font-size:18px;line-height:1.6;font-weight:500;}
+.fc-answer{font-size:16px;color:var(--success);line-height:1.6;}
+.fc-hint{font-size:12px;color:var(--muted);margin-top:8px;}
+.flashcard-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.fc-progress{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:16px;}
+
+/* SPEED ROUND */
+.speed-intro{text-align:center;padding:60px 20px;}
+.speed-title{font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--danger);letter-spacing:6px;margin-bottom:8px;animation:speedPulse 0.8s infinite alternate;}
+@keyframes speedPulse{from{text-shadow:0 0 20px rgba(255,59,92,0.5);}to{text-shadow:0 0 40px rgba(255,59,92,0.9),0 0 80px rgba(255,59,92,0.3);}}
+
+/* CREATE SCREEN */
+.create-form{max-width:720px;}
+.form-group{margin-bottom:18px;}
+.form-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;display:block;margin-bottom:6px;}
+input[type=text],input[type=number],textarea,select{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;padding:11px 14px;outline:none;transition:border-color 0.15s;}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);}
+textarea{min-height:72px;resize:vertical;}
+select option{background:var(--surface);}
+.qb{background:var(--surface);border:1px solid var(--border);padding:20px;margin-bottom:12px;}
+.qb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.qb-num{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--accent);}
+.qb-del{background:none;border:1px solid var(--border);color:var(--danger);width:26px;height:26px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.opt-input-row{display:flex;align-items:center;gap:8px;}
+.opt-input-row input[type=radio]{accent-color:var(--accent);width:14px;height:14px;}
+.opt-input-row .opt-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);width:12px;flex-shrink:0;}
+.opt-input-row input[type=text]{flex:1;}
+
+/* LIBRARY */
+.library-tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--border);}
+.lib-tab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;padding:10px 18px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.15s;text-transform:uppercase;}
+.lib-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.quiz-list{display:grid;gap:10px;}
+.quiz-row{background:var(--surface);border:1px solid var(--border);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;transition:border-color 0.15s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);}
+.quiz-row:hover{border-color:var(--border2);}
+.quiz-row-title{font-size:14px;font-weight:600;margin-bottom:4px;}
+.quiz-row-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;}
+.tag{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:1px;padding:2px 7px;border:1px solid;text-transform:uppercase;}
+.tag-ai{color:var(--accent2);border-color:var(--accent2);}
+.tag-user{color:var(--success);border-color:var(--success);}
+.tag-easy{color:var(--success);border-color:var(--success);}
+.tag-medium{color:var(--accent);border-color:var(--accent);}
+.tag-hard{color:var(--danger);border-color:var(--danger);}
+
+/* NOTIFICATIONS */
+.notif{position:fixed;top:72px;right:20px;background:var(--surface);border:1px solid var(--border2);padding:12px 18px;font-family:'IBM Plex Mono',monospace;font-size:11px;z-index:999;animation:notifIn 0.3s ease;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);max-width:280px;line-height:1.5;}
+.notif.success{border-color:var(--success);color:var(--success);}
+.notif.warning{border-color:var(--accent);color:var(--accent);}
+.notif.error{border-color:var(--danger);color:var(--danger);}
+@keyframes notifIn{from{transform:translateX(120%);}to{transform:translateX(0);}}
+
+/* LOADING */
+.loading{text-align:center;padding:80px 20px;}
+.spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--accent);animation:spin 0.8s linear infinite;margin:0 auto 16px;clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-text{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);animation:blink 1.2s infinite;}
+@keyframes blink{50%{opacity:0.3;}}
+
+/* SECTION TITLE */
+.section-title{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--muted2);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:24px 0;}
+
+/* ===================== RESPONSIVE ===================== */
+
+/* TABLET: 900px */
+@media(max-width:900px){
+  .home-grid{grid-template-columns:1fr;}
+  .analytics-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .result-stats-row{grid-template-columns:repeat(2,1fr);}
+  .quick-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-banner{padding:28px;}
+}
+
+/* TABLET HEADER: hide xp bar when space gets tight */
+@media(max-width:820px){
+  .xp-bar-mini{display:none;}
+  .nav-btn{padding:6px 8px;font-size:9px;letter-spacing:0.5px;}
+}
+
+/* MOBILE: ≤ 640px — full mobile treatment */
+@media(max-width:640px){
+
+  /* Restore normal cursor on touch */
+  body{cursor:auto;}
+  .cursor,.cursor-ring{display:none;}
+
+  /* HEADER */
+  header{
+    height:56px;
+    padding:0 14px;
+    gap:10px;
+  }
+
+  /* Hide desktop nav + right badges */
+  nav{display:none !important;}
+  .streak-badge{display:none;}
+  .xp-bar-mini{display:none;}
+  .level-badge{
+    font-size:9px;
+    padding:4px 8px;
+    letter-spacing:0;
+  }
+
+  /* Show hamburger */
+  .hamburger{display:flex;}
+  .mobile-drawer{display:block;}
+  .bottom-bar{display:block;}
+
+  /* Push page content above bottom bar */
+  main{
+    padding:16px 14px 74px;
+  }
+
+  /* HOME */
+  .home-grid{grid-template-columns:1fr;gap:14px;}
+  .hero-banner{
+    padding:22px 18px 36px;
+    clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);
+  }
+  .hero-title{
+    font-size:clamp(38px,11vw,60px);
+    letter-spacing:2px;
+  }
+  .hero-sub{font-size:12px;margin-bottom:18px;}
+  .hero-stats{gap:20px;margin-bottom:18px;}
+  .hero-stat-val{font-size:26px;}
+  .hero-buttons{flex-direction:column;gap:8px;}
+  .hero-buttons .btn{width:100%;justify-content:center;font-size:11px;padding:13px 20px;}
+
+  /* STATS ROW */
+  .stats-row{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:14px;}
+  .stat-val{font-size:28px;}
+  .stat-card{padding:12px 10px;}
+
+  /* QUICK GRID */
+  .quick-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .quick-card{padding:14px 12px;}
+  .quick-icon{font-size:20px;margin-bottom:6px;}
+  .quick-label{font-size:10px;}
+  .quick-sub{font-size:10px;}
+
+  /* CATEGORY GRID */
+  .category-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .cat-card{padding:14px 12px;}
+  .cat-icon{font-size:22px;}
+  .cat-name{font-size:11px;}
+
+  /* DAILY CARD */
+  .daily-card{padding:16px;}
+  .daily-name{font-size:18px;}
+
+  /* QUIZ SCREEN */
+  .quiz-wrap{max-width:100%;}
+  .quiz-topbar{flex-wrap:wrap;gap:8px;}
+  .q-card{padding:18px 16px;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);}
+  .q-text{font-size:15px;line-height:1.5;}
+  .opt{padding:12px 14px;font-size:13px;}
+  .opt-key{width:24px;height:24px;font-size:10px;}
+  .timer-ring{width:42px;height:42px;}
+  .timer-svg{width:42px;height:42px;viewBox:"0 0 42 42";}
+  #qc-timer{font-size:16px;}
+  .combo-bar{gap:6px;}
+  .quiz-actions{gap:8px;}
+  .quiz-actions .btn{flex:1;justify-content:center;font-size:10px;padding:11px 12px;}
+
+  /* RESULT SCREEN */
+  .result-wrap{max-width:100%;}
+  .score-num{font-size:72px;}
+  .result-stats-row{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .rs-box{padding:12px;}
+  .rs-val{font-size:28px;}
+  .result-hero{padding:28px 12px;}
+  .result-bg-text{font-size:100px;}
+  .xp-earned{font-size:18px;}
+
+  /* LEADERBOARD */
+  .lb-row{padding:12px 14px;gap:10px;}
+  .lb-rank{font-size:20px;width:28px;}
+  .lb-avatar{width:30px;height:30px;font-size:13px;}
+  .lb-name{font-size:13px;}
+  .lb-score{font-size:22px;}
+  .lb-meta{font-size:9px;}
+  .lb-header{flex-wrap:wrap;gap:6px;}
+
+  /* ANALYTICS */
+  .analytics-grid{grid-template-columns:1fr;gap:12px;}
+  .analytics-card{padding:16px;}
+  .bar-label{width:60px;font-size:9px;}
+  .heatmap-grid{grid-template-columns:repeat(7,1fr);}
+  .heat-cell{height:12px;}
+
+  /* ACHIEVEMENTS */
+  .achievements-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .ach-card{padding:16px 12px;}
+  .ach-icon{font-size:28px;}
+
+  /* FLASHCARDS */
+  .flashcard-wrap{max-width:100%;}
+  .flashcard{padding:28px 20px;min-height:180px;}
+  .fc-text{font-size:15px;}
+  .flashcard-actions{gap:6px;}
+  .flashcard-actions .btn{flex:1;justify-content:center;font-size:9px;padding:10px 6px;}
+
+  /* CREATE SCREEN */
+  .opts-grid{grid-template-columns:1fr;}
+  .create-form{max-width:100%;}
+
+  /* QUIZ LIST */
+  .quiz-row{flex-direction:column;align-items:flex-start;gap:12px;}
+  .quiz-row > div:last-child{display:flex;flex-direction:row;gap:8px;width:100%;}
+  .quiz-row > div:last-child .btn{flex:1;justify-content:center;}
+
+  /* SPEED INTRO */
+  .speed-title{font-size:52px;}
+
+  /* PAGE HEADER */
+  .page-title{font-size:clamp(36px,10vw,56px);}
+
+  /* CHIPS */
+  .chip-row{gap:5px;}
+  .chip{font-size:9px;padding:6px 10px;}
+
+  /* SETTINGS */
+  .settings-block{padding:12px 14px;}
+  .settings-label{font-size:13px;}
+
+  /* MODAL */
+  .modal{padding:22px 18px;width:94%;}
+
+  /* SECTION TITLE */
+  .section-title{font-size:9px;letter-spacing:2px;}
+
+  /* BUTTON SIZES */
+  .btn{font-size:10px;padding:11px 18px;}
+  .btn-sm{padding:7px 12px;font-size:9px;}
+}
+
+/* VERY SMALL: ≤ 360px */
+@media(max-width:360px){
+  header{padding:0 10px;}
+  .logo{font-size:18px;letter-spacing:2px;}
+  .logo-badge{display:none;}
+  main{padding:12px 10px 74px;}
+  .hero-title{font-size:34px;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .quick-grid{grid-template-columns:1fr;}
+  .achievements-grid{grid-template-columns:repeat(2,1fr);}
+  .category-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-buttons .btn{font-size:10px;padding:11px 14px;}
+}
+
+/* Two-col grid collapses on mobile */
+@media(max-width:640px){
+  .two-col-grid{grid-template-columns:1fr !important;}
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--surface);}
+::-webkit-scrollbar-thumb{background:var(--border2);}
+
+/* PROFILE MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border2);padding:32px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));animation:fadeIn 0.3s ease;}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;}
+.modal-close{background:none;border:1px solid var(--border);color:var(--muted);cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.rank-display{text-align:center;margin-bottom:20px;}
+.rank-icon{font-size:56px;margin-bottom:8px;}
+.rank-name{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--accent);letter-spacing:4px;}
+.rank-next{font-size:12px;color:var(--muted);margin-top:4px;}
+.xp-full-bar{height:8px;background:var(--border);margin-top:8px;}
+.xp-full-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));transition:width 0.8s ease;}
+
+/* CHALLENGE SHARE */
+.share-card{background:linear-gradient(135deg,var(--surface2),var(--surface));border:2px solid var(--accent2);padding:24px;text-align:center;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);}
+.share-code{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:8px;color:var(--accent);margin:12px 0;}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- PROFILE MODAL -->
+<div class="modal-overlay" id="profile-modal" onclick="if(event.target===this)closeModal()">
+<div class="modal">
+  <div class="modal-header">
+    <div>
+      <div class="page-eyebrow">Your Profile</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;" id="modal-name">ASPIRANT</div>
+    </div>
+    <button class="modal-close" onclick="closeModal()">×</button>
+  </div>
+  <div class="rank-display">
+    <div class="rank-icon" id="modal-rank-icon">🎖️</div>
+    <div class="rank-name" id="modal-rank-name">RECRUIT</div>
+    <div class="rank-next" id="modal-rank-next">0 XP to next rank</div>
+    <div class="xp-full-bar"><div class="xp-full-fill" id="modal-xp-fill"></div></div>
+  </div>
+  <div class="result-stats-row" style="grid-template-columns:repeat(2,1fr);">
+    <div class="rs-box"><div class="rs-val gold" id="mp-xp">0</div><div class="rs-key">Total XP</div></div>
+    <div class="rs-box"><div class="rs-val orange" id="mp-streak">0</div><div class="rs-key">Day Streak</div></div>
+    <div class="rs-box"><div class="rs-val blue" id="mp-quizzes">0</div><div class="rs-key">Quizzes Done</div></div>
+    <div class="rs-box"><div class="rs-val green" id="mp-accuracy">0%</div><div class="rs-key">Accuracy</div></div>
+  </div>
+  <div class="section-title">Badges Earned</div>
+  <div class="badges-unlocked" id="modal-badges" style="justify-content:flex-start;gap:8px;"></div>
+</div>
+</div>
+
+<!-- COMBO POPUP -->
+<div class="combo-popup" id="combo-popup">
+  <div class="combo-popup-val" id="combo-popup-val">🔥 3×</div>
+  <div class="combo-popup-text">COMBO STREAK!</div>
+</div>
+
+<!-- XP POPUP -->
+<div class="xp-popup" id="xp-popup">+50 XP</div>
+
+<header>
+  <div class="logo" onclick="showScreen('home');closeDrawer()">
+    GOVEXAM
+    <span class="logo-badge">PRO</span>
+  </div>
+  <nav>
+    <button class="nav-btn active" onclick="showScreen('home')">Home</button>
+    <button class="nav-btn" onclick="showScreen('quiz-setup')">Quiz</button>
+    <button class="nav-btn" onclick="showScreen('flashcards')">Cards</button>
+    <button class="nav-btn" onclick="showScreen('leaderboard')">Ranks</button>
+    <button class="nav-btn" onclick="showScreen('analytics')">Stats</button>
+    <button class="nav-btn" onclick="showScreen('achievements')">Badges</button>
+    <button class="nav-btn" onclick="showScreen('create')">Create</button>
+    <button class="nav-btn" onclick="showScreen('library')">Library<span class="nav-dot" id="lib-dot" style="display:none;"></span></button>
+  </nav>
+  <div class="header-right">
+    <div class="streak-badge" id="header-streak">🔥 0 DAY</div>
+    <div class="xp-bar-mini">
+      <span id="header-level">LVL 1</span>
+      <div class="xp-bar-track"><div class="xp-bar-fill" id="header-xp-fill" style="width:0%"></div></div>
+    </div>
+    <div class="level-badge" onclick="openModal()">👤 PROFILE</div>
+    <button class="hamburger" id="hamburger-btn" onclick="toggleDrawer()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-drawer" id="mobile-drawer">
+  <div class="drawer-nav">
+    <button class="drawer-nav-btn active" id="d-home" onclick="showScreen('home');closeDrawer()">🏠 Home</button>
+    <button class="drawer-nav-btn" id="d-quiz-setup" onclick="showScreen('quiz-setup');closeDrawer()">📝 Quiz</button>
+    <button class="drawer-nav-btn" id="d-flashcards" onclick="showScreen('flashcards');closeDrawer()">🃏 Cards</button>
+    <button class="drawer-nav-btn" id="d-leaderboard" onclick="showScreen('leaderboard');closeDrawer()">🏆 Ranks</button>
+    <button class="drawer-nav-btn" id="d-analytics" onclick="showScreen('analytics');closeDrawer()">📊 Stats</button>
+    <button class="drawer-nav-btn" id="d-achievements" onclick="showScreen('achievements');closeDrawer()">🏅 Badges</button>
+    <button class="drawer-nav-btn" id="d-create" onclick="showScreen('create');closeDrawer()">✏️ Create</button>
+    <button class="drawer-nav-btn" id="d-library" onclick="showScreen('library');closeDrawer()">📚 Library</button>
+  </div>
+  <div class="drawer-stats-row">
+    <div class="drawer-stat"><div class="drawer-stat-val" id="drawer-xp">0</div><div class="drawer-stat-key">XP</div></div>
+    <div class="drawer-stat"><div class="drawer-stat-val" id="drawer-streak">0🔥</div><div class="drawer-stat-key">Streak</div></div>
+    <div class="drawer-stat"><div class="drawer-stat-val" id="drawer-level">1</div><div class="drawer-stat-key">Level</div></div>
+    <div style=""><button class="level-badge" onclick="openModal();closeDrawer()" style="font-size:10px;padding:6px 12px;">👤 Profile</button></div>
+  </div>
+</div>
+
+<!-- MOBILE BOTTOM BAR -->
+<div class="bottom-bar" id="bottom-bar">
+  <div class="bottom-bar-inner">
+    <button class="bb-btn active" id="bb-home" onclick="showScreen('home')">
+      <span class="bb-icon">🏠</span>
+      <span class="bb-label">Home</span>
+    </button>
+    <button class="bb-btn" id="bb-quiz-setup" onclick="showScreen('quiz-setup')">
+      <span class="bb-icon">📝</span>
+      <span class="bb-label">Quiz</span>
+    </button>
+    <button class="bb-btn" id="bb-leaderboard" onclick="showScreen('leaderboard')">
+      <span class="bb-icon">🏆</span>
+      <span class="bb-label">Ranks</span>
+    </button>
+    <button class="bb-btn" id="bb-analytics" onclick="showScreen('analytics')">
+      <span class="bb-icon">📊</span>
+      <span class="bb-label">Stats</span>
+    </button>
+    <button class="bb-btn" id="bb-achievements" onclick="showScreen('achievements')">
+      <span class="bb-icon">🏅</span>
+      <span class="bb-label">Badges</span>
+      <span class="bb-dot" id="bb-dot" style="display:none;"></span>
+    </button>
+  </div>
+</div>
+
+<main>
+
+<!-- ===== HOME SCREEN ===== -->
+<div id="screen-home" class="screen active">
+  <div class="home-grid">
+    <div class="home-main">
+      <!-- HERO -->
+      <div class="hero-banner">
+        <div class="hero-title">
+          CRACK THE<br><span class="line2">CIVIL SERVICES</span>
+        </div>
+        <div class="hero-sub">AI-powered practice for UPSC, SSC, Banking, Railways & more. Build streaks, earn XP, dominate the leaderboard.</div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="hero-stat-val" id="home-total-q">2,000+</div><div class="hero-stat-key">Questions</div></div>
+          <div class="hero-stat"><div class="hero-stat-val" id="home-users">12.4K</div><div class="hero-stat-key">Aspirants</div></div>
+          <div class="hero-stat"><div class="hero-stat-val" id="home-streak-disp">0</div><div class="hero-stat-key">Your Streak</div></div>
+        </div>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="startQuickPlay()">⚡ Quick Play</button>
+          <button class="btn btn-accent2" onclick="startDailyChallenge()">📅 Daily Challenge</button>
+          <button class="btn btn-accent3" onclick="startSpeedRound()">⏱ Speed Round</button>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row" id="home-stats-row">
+        <div class="stat-card" onclick="showScreen('analytics')"><div class="stat-val gold" id="h-xp">0</div><div class="stat-key">Total XP</div></div>
+        <div class="stat-card" onclick="showScreen('leaderboard')"><div class="stat-val blue" id="h-rank">#—</div><div class="stat-key">Your Rank</div></div>
+        <div class="stat-card" onclick="showScreen('analytics')"><div class="stat-val green" id="h-accuracy">0%</div><div class="stat-key">Accuracy</div></div>
+        <div class="stat-card" onclick="showScreen('achievements')"><div class="stat-val orange" id="h-badges">0</div><div class="stat-key">Badges</div></div>
+      </div>
+
+      <!-- QUICK PLAY CARDS -->
+      <div class="section-title">Quick Play</div>
+      <div class="quick-grid">
+        <div class="quick-card qc-blue" onclick="quickLaunch('gk',10,'medium')">
+          <div class="quick-icon">📋</div>
+          <div class="quick-label">General Knowledge</div>
+          <div class="quick-sub">10 questions · Medium</div>
+        </div>
+        <div class="quick-card qc-orange" onclick="quickLaunch('history',10,'medium')">
+          <div class="quick-icon">🏛️</div>
+          <div class="quick-label">History</div>
+          <div class="quick-sub">10 questions · Medium</div>
+        </div>
+        <div class="quick-card qc-green" onclick="quickLaunch('polity',10,'medium')">
+          <div class="quick-icon">⚖️</div>
+          <div class="quick-label">Polity</div>
+          <div class="quick-sub">10 questions · Medium</div>
+        </div>
+        <div class="quick-card qc-purple" onclick="quickLaunch('current',10,'hard')">
+          <div class="quick-icon">📰</div>
+          <div class="quick-label">Current Affairs</div>
+          <div class="quick-sub">10 questions · Hard</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-side">
+      <!-- DAILY CHALLENGE -->
+      <div class="daily-card">
+        <div class="daily-title">Daily Challenge</div>
+        <div class="daily-name" id="daily-name">Loading...</div>
+        <div class="daily-meta" id="daily-meta">20 questions · Mixed difficulty</div>
+        <button class="btn btn-accent2 btn-sm" onclick="startDailyChallenge()" style="width:100%;">Play Now →</button>
+        <div class="daily-countdown" id="daily-countdown">Refreshes in: --:--:--</div>
+      </div>
+
+      <!-- LIVE ACTIVITY -->
+      <div class="activity-feed">
+        <div class="activity-header">
+          <span class="activity-title">Live Activity</span>
+          <div class="live-dot"></div>
+        </div>
+        <div class="feed-list" id="feed-list"></div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <div class="section-title" style="margin-bottom:8px;">Top Today</div>
+        <div id="mini-lb"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== QUIZ SETUP SCREEN ===== -->
+<div id="screen-quiz-setup" class="screen">
+  <div class="page-header">
+    <div class="page-eyebrow">Customize Your Test</div>
+    <div class="page-title">SETUP <span>QUIZ</span></div>
+  </div>
+
+  <div class="section-title">Select Category</div>
+  <div class="category-grid" id="setup-categories"></div>
+
+  <div class="section-title">Difficulty</div>
+  <div class="chip-row" id="diff-chips">
+    <button class="chip easy sel" onclick="selectChip(this,'diff','easy')">Easy</button>
+    <button class="chip medium" onclick="selectChip(this,'diff','medium')">Medium</button>
+    <button class="chip hard" onclick="selectChip(this,'diff','hard')">Hard</button>
+    <button class="chip" onclick="selectChip(this,'diff','mixed')">Mixed</button>
+  </div>
+
+  <div class="section-title">Questions</div>
+  <div class="chip-row" id="count-chips">
+    <button class="chip sel" onclick="selectChip(this,'count',5)">5</button>
+    <button class="chip" onclick="selectChip(this,'count',10)">10</button>
+    <button class="chip" onclick="selectChip(this,'count',15)">15</button>
+    <button class="chip" onclick="selectChip(this,'count',20)">20</button>
+    <button class="chip" onclick="selectChip(this,'count',30)">30</button>
+  </div>
+
+  <div class="section-title">Mode</div>
+  <div class="chip-row">
+    <button class="chip sel" id="mode-normal" onclick="selectMode('normal',this)">📝 Normal</button>
+    <button class="chip" id="mode-exam" onclick="selectMode('exam',this)">📋 Exam Mode</button>
+    <button class="chip" id="mode-practice" onclick="selectMode('practice',this)">🎓 Practice</button>
+  </div>
+
+  <div class="settings-block">
+    <div><div class="settings-label">Timer (30s per question)</div><div class="settings-sub">Counts down, auto-skip on zero</div></div>
+    <button class="toggle on" id="s-timer" onclick="this.classList.toggle('on')"></button>
+  </div>
+  <div class="settings-block">
+    <div><div class="settings-label">Show Explanations</div><div class="settings-sub">Display answer explanations</div></div>
+    <button class="toggle on" id="s-exp" onclick="this.classList.toggle('on')"></button>
+  </div>
+  <div class="settings-block">
+    <div><div class="settings-label">Shuffle Questions</div><div class="settings-sub">Randomize question order</div></div>
+    <button class="toggle on" id="s-shuffle" onclick="this.classList.toggle('on')"></button>
+  </div>
+
+  <div style="margin-top:24px;display:flex;gap:12px;">
+    <button class="btn btn-primary" onclick="startConfiguredQuiz()" style="font-size:14px;padding:16px 36px;">Start Quiz →</button>
+    <button class="btn btn-secondary" onclick="showScreen('home')">Cancel</button>
+  </div>
+</div>
+
+<!-- ===== QUIZ SCREEN ===== -->
+<div id="screen-quiz" class="screen">
+  <div class="quiz-wrap">
+    <div id="quiz-loading" class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Generating Questions...</div>
+    </div>
+    <div id="quiz-content" style="display:none;">
+      <div class="quiz-topbar">
+        <div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;">QUESTION <strong style="color:var(--accent);font-size:16px;" id="qc-num">1</strong> / <span id="qc-total">10</span></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted2);margin-top:2px;" id="qc-cat"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="combo-bar">
+            <span class="combo-label">COMBO</span>
+            <span class="combo-count" id="combo-count">0</span>
+            <span id="combo-fire" style="font-size:16px;"></span>
+          </div>
+          <div class="timer-ring">
+            <svg class="timer-svg" width="48" height="48" viewBox="0 0 48 48">
+              <circle class="timer-circle" cx="24" cy="24" r="20"/>
+              <circle class="timer-progress" cx="24" cy="24" r="20" id="timer-circle-progress" stroke-dasharray="125.6" stroke-dashoffset="0"/>
+            </svg>
+            <div class="timer-text" id="qc-timer">30</div>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-progress-wrap">
+        <div class="quiz-progress-bg"><div class="quiz-progress-fg" id="quiz-pbar"></div></div>
+      </div>
+      <div class="q-card">
+        <div class="q-meta" id="qc-meta-label">QUESTION 01</div>
+        <div class="q-text" id="qc-text"></div>
+      </div>
+      <div class="options" id="qc-options"></div>
+      <div class="exp-box" id="qc-exp"><strong>Explanation</strong><span id="qc-exp-text"></span></div>
+      <div class="quiz-actions">
+        <button class="btn btn-secondary btn-sm" onclick="quitQuiz()">Quit</button>
+        <button class="btn btn-primary" id="qc-next" onclick="nextQuestion()" disabled>Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RESULT SCREEN ===== -->
+<div id="screen-result" class="screen">
+  <div class="result-wrap">
+    <div class="result-hero">
+      <div class="result-bg-text" id="result-bg-text">PASS</div>
+      <div class="score-display">
+        <span class="score-num" id="r-score">0</span><span class="score-suffix">%</span>
+      </div>
+      <div class="result-label" id="r-status">QUALIFIED</div>
+      <div class="xp-earned" id="r-xp-earned">+0 XP EARNED</div>
+      <div class="badges-unlocked" id="r-badges"></div>
+    </div>
+    <div class="result-stats-row">
+      <div class="rs-box"><div class="rs-val" style="color:var(--success);" id="r-correct">0</div><div class="rs-key">Correct</div></div>
+      <div class="rs-box"><div class="rs-val" style="color:var(--danger);" id="r-wrong">0</div><div class="rs-key">Wrong</div></div>
+      <div class="rs-box"><div class="rs-val" style="color:var(--muted);" id="r-skipped">0</div><div class="rs-key">Skipped</div></div>
+      <div class="rs-box"><div class="rs-val" style="color:var(--cyan);" id="r-time">0s</div><div class="rs-key">Time</div></div>
+    </div>
+    <div class="section-title">Review Answers</div>
+    <div id="r-review" style="margin-bottom:24px;display:grid;gap:8px;"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="showScreen('quiz-setup')">Play Again</button>
+      <button class="btn btn-secondary" onclick="showScreen('home')">Home</button>
+      <button class="btn btn-accent2" onclick="shareResult()">Share Score</button>
+      <button class="btn btn-accent3" onclick="showScreen('analytics')">View Analytics</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SPEED ROUND SCREEN ===== -->
+<div id="screen-speed" class="screen">
+  <div id="speed-intro" class="speed-intro">
+    <div class="speed-title">SPEED ROUND</div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;">10 SECONDS PER QUESTION · NO EXPLANATIONS · MAXIMUM XP</div>
+    <div style="font-size:15px;color:var(--muted2);margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto;">Test your reflexes. Answer as fast as possible. Wrong answers deduct points!</div>
+    <button class="btn btn-danger" style="font-size:16px;padding:18px 40px;" onclick="startSpeedQuiz()">BEGIN SPEED ROUND</button>
+  </div>
+  <div id="speed-quiz-area" style="display:none;" class="quiz-wrap"></div>
+</div>
+
+<!-- ===== FLASHCARDS SCREEN ===== -->
+<div id="screen-flashcards" class="screen">
+  <div class="page-header">
+    <div class="page-eyebrow">Memory Training</div>
+    <div class="page-title">FLASH <span>CARDS</span></div>
+  </div>
+  <div class="section-title">Select Category</div>
+  <div class="chip-row" id="fc-chips">
+    <button class="chip sel" onclick="selectFCCat('gk',this)">GK</button>
+    <button class="chip" onclick="selectFCCat('history',this)">History</button>
+    <button class="chip" onclick="selectFCCat('polity',this)">Polity</button>
+    <button class="chip" onclick="selectFCCat('science',this)">Science</button>
+    <button class="chip" onclick="selectFCCat('geography',this)">Geography</button>
+  </div>
+  <div class="flashcard-wrap">
+    <div class="fc-progress" id="fc-progress">Card 1 of 10</div>
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-side flashcard-front">
+        <div class="fc-label">Question — Click to reveal answer</div>
+        <div class="fc-text" id="fc-question">Loading...</div>
+        <div class="fc-hint" id="fc-hint"></div>
+      </div>
+      <div class="flashcard-side flashcard-back">
+        <div class="fc-label">Answer</div>
+        <div class="fc-answer" id="fc-answer"></div>
+      </div>
+    </div>
+    <div class="flashcard-actions">
+      <button class="btn btn-danger btn-sm" onclick="fcRate('hard')">😓 Hard</button>
+      <button class="btn btn-secondary btn-sm" onclick="fcRate('ok')">🤔 Okay</button>
+      <button class="btn btn-success btn-sm" onclick="fcRate('easy')">✅ Easy</button>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;">
+      <button class="btn btn-secondary btn-sm" onclick="fcPrev()">← Prev</button>
+      <button class="btn btn-secondary btn-sm" onclick="fcNext()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LEADERBOARD SCREEN ===== -->
+<div id="screen-leaderboard" class="screen">
+  <div class="page-header">
+    <div class="page-eyebrow">Global Rankings</div>
+    <div class="page-title">LEADER <span>BOARD</span></div>
+  </div>
+  <div class="lb-header">
+    <button class="chip sel" onclick="loadLB('global',this)">🌐 Global</button>
+    <button class="chip" onclick="loadLB('weekly',this)">📅 This Week</button>
+    <button class="chip" onclick="loadLB('today',this)">☀️ Today</button>
+  </div>
+  <div class="lb-grid" id="lb-grid"></div>
+</div>
+
+<!-- ===== ANALYTICS SCREEN ===== -->
+<div id="screen-analytics" class="screen">
+  <div class="page-header">
+    <div class="page-eyebrow">Your Performance</div>
+    <div class="page-title">ANALYTICS <span>HQ</span></div>
+  </div>
+  <div class="stats-row" style="margin-bottom:20px;">
+    <div class="stat-card"><div class="stat-val gold" id="an-total">0</div><div class="stat-key">Quizzes</div></div>
+    <div class="stat-card"><div class="stat-val green" id="an-accuracy">0%</div><div class="stat-key">Accuracy</div></div>
+    <div class="stat-card"><div class="stat-val orange" id="an-streak">0</div><div class="stat-key">Best Streak</div></div>
+    <div class="stat-card"><div class="stat-val blue" id="an-xp">0</div><div class="stat-key">Total XP</div></div>
+  </div>
+  <div class="analytics-grid">
+    <div class="analytics-card">
+      <div class="analytics-title">Performance by Category</div>
+      <div class="bar-chart" id="an-cat-chart"></div>
+    </div>
+    <div class="analytics-card">
+      <div class="analytics-title">Score Trend (Last 10)</div>
+      <div class="trend-line"><div class="trend-path" id="an-trend"></div></div>
+      <div style="margin-top:16px;">
+        <div class="analytics-title">Overall Accuracy</div>
+        <div class="accuracy-circle">
+          <div class="circle-stat"><div class="circle-val" style="color:var(--success);" id="an-correct-c">0</div><div class="circle-key">Correct</div></div>
+          <div class="circle-stat"><div class="circle-val" style="color:var(--danger);" id="an-wrong-c">0</div><div class="circle-key">Wrong</div></div>
+          <div class="circle-stat"><div class="circle-val" style="color:var(--muted);" id="an-skip-c">0</div><div class="circle-key">Skipped</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="analytics-card">
+      <div class="analytics-title">30-Day Activity Heatmap</div>
+      <div class="heatmap-grid" id="an-heatmap"></div>
+    </div>
+    <div class="analytics-card">
+      <div class="analytics-title">Weak Areas — Focus Here</div>
+      <div class="weak-list" id="an-weak"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ACHIEVEMENTS SCREEN ===== -->
+<div id="screen-achievements" class="screen">
+  <div class="page-header">
+    <div class="page-eyebrow">Your Accomplishments</div>
+    <div class="page-title">BADGES &amp; <span>RANKS</span></div>
+  </div>
+  <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-bottom:24px;">
+    <div class="stat-card"><div class="stat-val gold" id="ach-earned">0</div><div class="stat-key">Earned</div></div>
+    <div class="stat-card"><div class="stat-val muted" id="ach-total">0</div><div class="stat-key">Total</div></div>
+    <div class="stat-card"><div class="stat-val blue" id="ach-pct">0%</div><div class="stat-key">Complete</div></div>
+  </div>
+  <div class="section-title">All Achievements</div>
+  <div class="achievements-grid" id="ach-grid"></div>
+</div>
+
+<!-- ===== CREATE SCREEN ===== -->
+<div id="screen-create" class="screen">
+  <div class="page-header">
+    <div class="page-eyebrow">Manual Builder</div>
+    <div class="page-title">CREATE <span>QUIZ</span></div>
+  </div>
+  <div class="create-form">
+    <div class="form-group"><label class="form-label">Quiz Title</label><input type="text" id="c-title" placeholder="e.g. UPSC GS Paper 1 Mock"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="two-col-grid">
+      <div class="form-group"><label class="form-label">Category</label>
+        <select id="c-cat"><option value="General Knowledge">General Knowledge</option><option value="History">History</option><option value="Geography">Geography</option><option value="Polity">Polity</option><option value="Economy">Economy</option><option value="Science">Science</option><option value="Current Affairs">Current Affairs</option><option value="Mathematics">Mathematics</option><option value="English">English</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Difficulty</label>
+        <select id="c-diff"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select>
+      </div>
+    </div>
+    <div class="section-title" style="margin-top:8px;">Questions</div>
+    <div id="c-questions"></div>
+    <button class="btn btn-secondary btn-sm" style="margin-bottom:20px;" onclick="addQuestion()">+ Add Question</button>
+    <br>
+    <button class="btn btn-primary" onclick="saveQuiz()">💾 Save to Library</button>
+  </div>
+</div>
+
+<!-- ===== LIBRARY SCREEN ===== -->
+<div id="screen-library" class="screen">
+  <div class="page-header">
+    <div class="page-eyebrow">Saved Quizzes</div>
+    <div class="page-title">YOUR <span>LIBRARY</span></div>
+  </div>
+  <div class="library-tabs">
+    <div class="lib-tab active" onclick="filterLibrary('all',this)">All</div>
+    <div class="lib-tab" onclick="filterLibrary('user',this)">Created by Me</div>
+    <div class="lib-tab" onclick="filterLibrary('ai',this)">AI Generated</div>
+  </div>
+  <div id="library-content"></div>
+</div>
+
+</main>
+
+<script>
+// ========================== CURSOR ==========================
+const cur = document.getElementById('cursor');
+const curR = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px';
+  setTimeout(()=>{ curR.style.left = e.clientX+'px'; curR.style.top = e.clientY+'px'; }, 80);
+});
+
+// ========================== DATA ==========================
+const CATS = [
+  {id:'gk',name:'General Knowledge',icon:'📋',count:'500+'},
+  {id:'history',name:'History',icon:'🏛️',count:'320+'},
+  {id:'geography',name:'Geography',icon:'🗺️',count:'280+'},
+  {id:'polity',name:'Polity',icon:'⚖️',count:'240+'},
+  {id:'economy',name:'Economy',icon:'📈',count:'190+'},
+  {id:'science',name:'Science & Tech',icon:'🔬',count:'310+'},
+  {id:'current',name:'Current Affairs',icon:'📰',count:'Live'},
+  {id:'math',name:'Mathematics',icon:'📐',count:'450+'},
+  {id:'english',name:'English',icon:'📝',count:'360+'},
+];
+
+const QB = {
+  gk:[
+    {q:"Who was the first President of India?",opts:["Dr. Rajendra Prasad","Jawaharlal Nehru","Sardar Patel","Dr. B.R. Ambedkar"],ans:0,exp:"Dr. Rajendra Prasad served as the first President of India from 1950 to 1962."},
+    {q:"Which is the largest state in India by area?",opts:["Maharashtra","Madhya Pradesh","Rajasthan","Uttar Pradesh"],ans:2,exp:"Rajasthan is the largest state of India covering about 342,239 km²."},
+    {q:"The Preamble of the Indian Constitution begins with which words?",opts:["We the Citizens","We the People","We the Indians","We the Subjects"],ans:1,exp:"The Preamble begins with 'WE, THE PEOPLE OF INDIA'."},
+    {q:"Which article of the Indian Constitution deals with Right to Equality?",opts:["Article 12","Article 14","Article 19","Article 21"],ans:1,exp:"Article 14 guarantees equality before law and equal protection of laws."},
+    {q:"The National Emblem of India is adopted from which Ashoka pillar?",opts:["Vaishali","Sanchi","Sarnath","Allahabad"],ans:2,exp:"The national emblem is an adaptation of the Lion Capital of Ashoka at Sarnath."},
+    {q:"Which is the longest river in India?",opts:["Yamuna","Godavari","Ganga","Indus"],ans:2,exp:"The Ganga is the longest river in India at about 2,525 km."},
+    {q:"The headquarters of the United Nations is located in?",opts:["London","Paris","New York","Geneva"],ans:2,exp:"The UN headquarters is in New York City, USA."},
+    {q:"Who wrote the Indian National Anthem 'Jana Gana Mana'?",opts:["Bankim Chandra","Rabindranath Tagore","Subramanya Bharathi","Mohammad Iqbal"],ans:1,exp:"Jana Gana Mana was written by Rabindranath Tagore and adopted on January 24, 1950."},
+    {q:"Which planet is known as the Red Planet?",opts:["Venus","Saturn","Jupiter","Mars"],ans:3,exp:"Mars is called the Red Planet due to iron oxide on its surface."},
+    {q:"The term of a Rajya Sabha member is?",opts:["4 years","5 years","6 years","7 years"],ans:2,exp:"Members of Rajya Sabha serve a term of 6 years."},
+    {q:"What does 'GDP' stand for?",opts:["General Domestic Product","Gross Domestic Product","Gross Development Plan","General Development Production"],ans:1,exp:"GDP stands for Gross Domestic Product."},
+    {q:"Who is known as the Iron Man of India?",opts:["Jawaharlal Nehru","Bhagat Singh","Sardar Vallabhbhai Patel","Lal Bahadur Shastri"],ans:2,exp:"Sardar Patel is called the Iron Man of India."},
+    {q:"Which is the smallest continent?",opts:["Europe","Antarctica","Australia","South America"],ans:2,exp:"Australia is the smallest continent by land area."},
+    {q:"Who invented the telephone?",opts:["Thomas Edison","Alexander Graham Bell","Nikola Tesla","Guglielmo Marconi"],ans:1,exp:"Alexander Graham Bell invented the telephone in 1876."},
+    {q:"Which is the highest peak in the world?",opts:["K2","Kangchenjunga","Mount Everest","Makalu"],ans:2,exp:"Mount Everest at 8,848.86 m is the world's highest peak."},
+  ],
+  history:[
+    {q:"The Battle of Panipat (First) was fought in which year?",opts:["1508","1526","1545","1576"],ans:1,exp:"The First Battle of Panipat was fought in 1526 between Babur and Ibrahim Lodi."},
+    {q:"Who founded the Mughal Empire in India?",opts:["Akbar","Humayun","Babur","Shah Jahan"],ans:2,exp:"Babur founded the Mughal Empire in 1526."},
+    {q:"The Quit India Movement was launched in which year?",opts:["1939","1940","1942","1945"],ans:2,exp:"The Quit India Movement was launched on August 8, 1942."},
+    {q:"Who was the last Viceroy of British India?",opts:["Lord Curzon","Lord Mountbatten","Lord Wavell","Lord Irwin"],ans:1,exp:"Lord Mountbatten was the last Viceroy of British India (1947)."},
+    {q:"The First War of Indian Independence was fought in?",opts:["1847","1857","1867","1877"],ans:1,exp:"The First War of Indian Independence (Sepoy Mutiny) was fought in 1857."},
+    {q:"Who built the Taj Mahal?",opts:["Akbar","Aurangzeb","Shah Jahan","Humayun"],ans:2,exp:"Shah Jahan built the Taj Mahal in memory of his wife Mumtaz Mahal."},
+    {q:"The Indian National Congress was founded in which year?",opts:["1875","1885","1895","1905"],ans:1,exp:"The Indian National Congress was founded in 1885 by A.O. Hume."},
+    {q:"Who was the first Prime Minister of India?",opts:["Sardar Patel","Dr. Rajendra Prasad","Jawaharlal Nehru","Lal Bahadur Shastri"],ans:2,exp:"Jawaharlal Nehru was the first Prime Minister of India (1947-1964)."},
+    {q:"The Partition of Bengal occurred in which year?",opts:["1900","1905","1910","1915"],ans:1,exp:"The Partition of Bengal was carried out by Lord Curzon in 1905."},
+    {q:"Who was the founder of the Maratha Empire?",opts:["Shivaji Maharaj","Bajirao Peshwa","Sambhaji","Peshwa Balaji"],ans:0,exp:"Chhatrapati Shivaji Maharaj founded the Maratha Empire in the 17th century."},
+  ],
+  polity:[
+    {q:"The Constitution of India came into force on?",opts:["15 Aug 1947","26 Nov 1949","26 Jan 1950","2 Oct 1950"],ans:2,exp:"The Constitution of India came into force on 26th January 1950 (Republic Day)."},
+    {q:"Who is called the 'Father of the Indian Constitution'?",opts:["Jawaharlal Nehru","Mahatma Gandhi","Dr. B.R. Ambedkar","Sardar Patel"],ans:2,exp:"Dr. B.R. Ambedkar, the chief architect of the Indian Constitution, is called its Father."},
+    {q:"The Indian Parliament consists of how many houses?",opts:["1","2","3","4"],ans:1,exp:"The Indian Parliament has two houses: Lok Sabha and Rajya Sabha."},
+    {q:"The maximum strength of Lok Sabha is?",opts:["543","545","552","560"],ans:2,exp:"The maximum strength of Lok Sabha is 552."},
+    {q:"Which Fundamental Right is available only to Indian citizens?",opts:["Right to Equality","Right to Freedom of Religion","Right to Freedom of Speech","Right to Life"],ans:2,exp:"Right to Freedom of Speech (Article 19) is only available to citizens."},
+    {q:"The Governor of a state is appointed by?",opts:["Chief Minister","Chief Justice","President","Prime Minister"],ans:2,exp:"The Governor is appointed by the President of India."},
+    {q:"DPSP stands for?",opts:["Directive Principles of State Policies","Directive Principles of State Policy","Direct Policy of State Provisions","Directive Provisions of State Policy"],ans:1,exp:"DPSP — Directive Principles of State Policy — contained in Articles 36-51."},
+    {q:"Who presides over joint sitting of both Houses of Parliament?",opts:["President","Vice President","Speaker of Lok Sabha","Prime Minister"],ans:2,exp:"The Speaker of Lok Sabha presides over joint sittings."},
+  ],
+  economy:[
+    {q:"The RBI was nationalized in which year?",opts:["1935","1947","1949","1955"],ans:2,exp:"The Reserve Bank of India was nationalized on 1 January 1949."},
+    {q:"Who presents the Union Budget in India?",opts:["Prime Minister","Finance Minister","RBI Governor","President"],ans:1,exp:"The Union Budget is presented by the Finance Minister in the Lok Sabha."},
+    {q:"GST was implemented in India from?",opts:["April 1, 2016","July 1, 2017","January 1, 2018","April 1, 2017"],ans:1,exp:"GST was implemented on July 1, 2017 in India."},
+    {q:"The 'Green Revolution' in India is associated with?",opts:["Amul cooperative","Norman Borlaug & M.S. Swaminathan","Operation Flood","Operation Barga"],ans:1,exp:"The Green Revolution was led by M.S. Swaminathan in India."},
+    {q:"NABARD stands for?",opts:["National Bank for Agriculture and Rural Development","National Board for Agricultural Research","National Bureau for Agri Development","None of the above"],ans:0,exp:"NABARD — National Bank for Agriculture and Rural Development — established in 1982."},
+  ],
+  science:[
+    {q:"The SI unit of electric current is?",opts:["Volt","Watt","Ampere","Ohm"],ans:2,exp:"Ampere (A) is the SI unit of electric current."},
+    {q:"DNA stands for?",opts:["Deoxyribose Nucleic Acid","Deoxyribonucleic Acid","Diribonucleic Acid","Deoxyribonuclein Acid"],ans:1,exp:"DNA stands for Deoxyribonucleic Acid."},
+    {q:"Which gas is used in fire extinguishers?",opts:["Oxygen","Carbon Dioxide","Nitrogen","Hydrogen"],ans:1,exp:"Carbon Dioxide (CO₂) is the most common gas used in fire extinguishers."},
+    {q:"The speed of light in vacuum is approximately?",opts:["3×10⁶ m/s","3×10⁸ m/s","3×10¹⁰ m/s","3×10⁴ m/s"],ans:1,exp:"The speed of light in vacuum is approximately 3×10⁸ m/s."},
+    {q:"Which organ of the body produces insulin?",opts:["Liver","Kidney","Pancreas","Thyroid"],ans:2,exp:"Insulin is produced by the beta cells in the pancreas."},
+    {q:"Newton's first law of motion is also called?",opts:["Law of Acceleration","Law of Gravitation","Law of Inertia","Law of Action-Reaction"],ans:2,exp:"Newton's first law is the Law of Inertia."},
+    {q:"What is the chemical formula of water?",opts:["HO","H₂O","H₂O₂","HO₂"],ans:1,exp:"Water has the chemical formula H₂O."},
+    {q:"The process by which plants make food is called?",opts:["Respiration","Transpiration","Photosynthesis","Digestion"],ans:2,exp:"Photosynthesis is the process by which plants use sunlight to produce glucose."},
+  ],
+  geography:[
+    {q:"Which is the largest ocean in the world?",opts:["Atlantic","Indian","Arctic","Pacific"],ans:3,exp:"The Pacific Ocean covers about 165 million km²."},
+    {q:"The Tropic of Cancer passes through which Indian state?",opts:["Kerala","Gujarat","Bihar","Tamil Nadu"],ans:1,exp:"The Tropic of Cancer (23.5°N) passes through Gujarat among other states."},
+    {q:"Which is the highest plateau in the world?",opts:["Tibetan Plateau","Deccan Plateau","Bolivian Plateau","Colorado Plateau"],ans:0,exp:"The Tibetan Plateau at ~4,500m is the world's highest plateau."},
+    {q:"The Sahara Desert is located in which continent?",opts:["Asia","Australia","Africa","South America"],ans:2,exp:"The Sahara Desert, the world's largest hot desert, is in North Africa."},
+    {q:"Which is the longest river in the world?",opts:["Amazon","Congo","Nile","Yangtze"],ans:2,exp:"The Nile River at about 6,650 km is traditionally the world's longest."},
+  ],
+  math:[
+    {q:"What is the value of π (pi) approximately?",opts:["3.14","3.41","3.04","3.44"],ans:0,exp:"Pi (π) ≈ 3.14159..."},
+    {q:"If a = 2 and b = 3, what is a² + b²?",opts:["10","13","12","25"],ans:1,exp:"a² + b² = 4 + 9 = 13."},
+    {q:"What is the LCM of 12 and 18?",opts:["6","24","36","72"],ans:2,exp:"LCM of 12 and 18 = 2²×3² = 36."},
+    {q:"The sum of angles in a triangle is?",opts:["90°","180°","270°","360°"],ans:1,exp:"The sum of all interior angles of a triangle is always 180°."},
+    {q:"What percentage of 200 is 50?",opts:["20%","25%","30%","40%"],ans:1,exp:"(50/200) × 100 = 25%."},
+    {q:"If the radius of a circle is 7 cm, what is its area? (π = 22/7)",opts:["154 cm²","144 cm²","132 cm²","176 cm²"],ans:0,exp:"Area = πr² = (22/7) × 7 × 7 = 154 cm²."},
+    {q:"A train travels 300 km in 5 hours. What is its speed?",opts:["40 km/h","50 km/h","60 km/h","70 km/h"],ans:2,exp:"Speed = Distance/Time = 300/5 = 60 km/h."},
+  ],
+  english:[
+    {q:"What is the synonym of 'Abundant'?",opts:["Scarce","Plentiful","Rare","Limited"],ans:1,exp:"Abundant means existing in large quantities; Plentiful is its synonym."},
+    {q:"Choose the correct spelling:",opts:["Accomodate","Accommodate","Acomodate","Acommodate"],ans:1,exp:"The correct spelling is 'Accommodate' — with double 'c' and double 'm'."},
+    {q:"The antonym of 'Benevolent' is?",opts:["Kind","Generous","Malevolent","Compassionate"],ans:2,exp:"Malevolent (wishing evil) is the antonym of Benevolent."},
+    {q:"Fill in the blank: She ___ to school every day.",opts:["go","goes","gone","going"],ans:1,exp:"With third-person singular subject, the verb takes 's': goes."},
+    {q:"What is a 'Metaphor'?",opts:["A direct comparison using 'like' or 'as'","A figure of speech making an implicit comparison","An exaggeration for emphasis","A play on words"],ans:1,exp:"A metaphor makes an implicit comparison without using 'like' or 'as'."},
+  ],
+  current:[
+    {q:"India's first solar mission is called?",opts:["Chandrayaan","Mangalyaan","Aditya-L1","SuryanShakti"],ans:2,exp:"Aditya-L1 is India's first solar observatory mission, launched by ISRO in 2023."},
+    {q:"Which country hosted the G20 Summit in 2023?",opts:["USA","China","India","Brazil"],ans:2,exp:"India hosted the G20 Summit in New Delhi, September 2023."},
+    {q:"The 'One Sun, One World, One Grid' initiative was launched by?",opts:["USA","Russia","India","UK"],ans:2,exp:"This initiative was proposed by India's PM Narendra Modi."},
+    {q:"Chandrayaan-3 successfully landed on the Moon's which region?",opts:["North Pole","Equatorial region","South Pole","Far side"],ans:2,exp:"Chandrayaan-3 landed near the South Pole on August 23, 2023."},
+    {q:"Which country became the first to land on Mars's south pole?",opts:["USA","China","India","ESA"],ans:0,exp:"NASA's InSight was the first mission to study Mars's interior."},
+  ],
+};
+
+const FLASHCARD_DATA = {
+  gk:[
+    {q:"What is the capital of India?",a:"New Delhi",hint:"Location in northern India"},
+    {q:"Who wrote 'Discovery of India'?",a:"Jawaharlal Nehru",hint:"First Prime Minister"},
+    {q:"What is the national animal of India?",a:"Bengal Tiger",hint:"Big cat"},
+    {q:"In which year did India get independence?",a:"1947 (15 August)",hint:"Mid 20th century"},
+    {q:"What is the full form of ISRO?",a:"Indian Space Research Organisation",hint:"Space agency"},
+    {q:"Who is the Father of the Nation?",a:"Mahatma Gandhi",hint:"Led non-violent resistance"},
+    {q:"What is Article 21 of the Indian Constitution?",a:"Right to Life and Personal Liberty",hint:"Fundamental Right"},
+    {q:"Name the highest court of India.",a:"Supreme Court of India",hint:"Located in New Delhi"},
+    {q:"What is the currency of Japan?",a:"Japanese Yen (¥)",hint:"East Asia"},
+    {q:"Who invented the theory of relativity?",a:"Albert Einstein (1905/1915)",hint:"E=mc²"},
+  ],
+  history:[
+    {q:"When did the Sepoy Mutiny take place?",a:"1857",hint:"Also called First War of Independence"},
+    {q:"Who founded the Arya Samaj?",a:"Swami Dayanand Saraswati (1875)",hint:"Hindu reform movement"},
+    {q:"Name the last Mughal Emperor of India.",a:"Bahadur Shah Zafar II",hint:"Exiled to Burma"},
+    {q:"In which year was the Indian National Congress founded?",a:"1885 by A.O. Hume",hint:"Bombay"},
+    {q:"Who led the Dandi March?",a:"Mahatma Gandhi (1930)",hint:"Salt Satyagraha"},
+    {q:"When was India's Constitution adopted?",a:"26 November 1949",hint:"Came into force Jan 1950"},
+  ],
+  polity:[
+    {q:"How many Fundamental Rights are there in the Indian Constitution?",a:"6 Fundamental Rights",hint:"Originally 7, Right to Property removed"},
+    {q:"Who appoints the Chief Justice of India?",a:"President of India",hint:"On advice of collegium"},
+    {q:"What is the minimum age to be President of India?",a:"35 years",hint:"Article 58"},
+    {q:"Which article deals with Emergency provisions?",a:"Article 352 (National Emergency)",hint:"Three types of emergency"},
+    {q:"How many schedules are in the Indian Constitution?",a:"12 Schedules",hint:"Originally 8"},
+  ],
+  science:[
+    {q:"What is the powerhouse of the cell?",a:"Mitochondria",hint:"Produces ATP energy"},
+    {q:"What is Newton's Second Law of Motion?",a:"F = ma (Force = Mass × Acceleration)",hint:"Mathematical form"},
+    {q:"What is the atomic number of Carbon?",a:"6",hint:"6 protons in nucleus"},
+    {q:"What is the full form of DNA?",a:"Deoxyribonucleic Acid",hint:"Genetic material"},
+    {q:"What is the chemical symbol for Gold?",a:"Au (from Latin Aurum)",hint:"Precious metal"},
+    {q:"What is Ohm's Law?",a:"V = IR (Voltage = Current × Resistance)",hint:"Electrical circuit"},
+  ],
+  geography:[
+    {q:"What is the capital of Australia?",a:"Canberra",hint:"Not Sydney or Melbourne"},
+    {q:"Which is the world's largest country by area?",a:"Russia (17.1 million km²)",hint:"Spans two continents"},
+    {q:"What is the deepest ocean trench?",a:"Mariana Trench (Pacific Ocean)",hint:"~11,000m deep"},
+    {q:"Which river flows through Egypt?",a:"The Nile",hint:"Longest river in Africa"},
+    {q:"What is the smallest country in the world?",a:"Vatican City (0.44 km²)",hint:"Inside Rome, Italy"},
+  ],
+};
+
+const ACHIEVEMENTS_DEF = [
+  {id:'first_quiz',icon:'🎯',name:'First Steps',desc:'Complete your first quiz',req:1,type:'quizzes'},
+  {id:'five_quiz',icon:'📚',name:'Bookworm',desc:'Complete 5 quizzes',req:5,type:'quizzes'},
+  {id:'twenty_quiz',icon:'🏆',name:'Champion',desc:'Complete 20 quizzes',req:20,type:'quizzes'},
+  {id:'perfect',icon:'💯',name:'Perfect Score',desc:'Score 100% in a quiz',req:100,type:'perfect'},
+  {id:'streak3',icon:'🔥',name:'On Fire',desc:'3-day streak',req:3,type:'streak'},
+  {id:'streak7',icon:'⚡',name:'Lightning',desc:'7-day streak',req:7,type:'streak'},
+  {id:'streak30',icon:'🌟',name:'Unstoppable',desc:'30-day streak',req:30,type:'streak'},
+  {id:'xp500',icon:'💎',name:'Diamond',desc:'Earn 500 XP',req:500,type:'xp'},
+  {id:'xp2000',icon:'👑',name:'Legend',desc:'Earn 2000 XP',req:2000,type:'xp'},
+  {id:'combo5',icon:'🎮',name:'Combo King',desc:'5-answer combo streak',req:5,type:'combo'},
+  {id:'speed',icon:'🚀',name:'Speed Demon',desc:'Complete a Speed Round',req:1,type:'speed'},
+  {id:'creator',icon:'✏️',name:'Quiz Creator',desc:'Create and save a quiz',req:1,type:'created'},
+  {id:'flashcard',icon:'🃏',name:'Flash Master',desc:'Review 20 flashcards',req:20,type:'flashcards'},
+  {id:'allcats',icon:'🌍',name:'All-Rounder',desc:'Play all 9 categories',req:9,type:'categories'},
+  {id:'accuracy90',icon:'🎖️',name:'Sharp Shooter',desc:'Maintain 90%+ accuracy',req:90,type:'accuracy'},
+];
+
+const RANKS = [
+  {name:'Recruit',icon:'🎖️',minXP:0,maxXP:100},
+  {name:'Aspirant',icon:'📗',minXP:100,maxXP:300},
+  {name:'Scholar',icon:'📘',minXP:300,maxXP:700},
+  {name:'Officer',icon:'⭐',minXP:700,maxXP:1500},
+  {name:'Commander',icon:'🌟',minXP:1500,maxXP:3000},
+  {name:'General',icon:'🏅',minXP:3000,maxXP:6000},
+  {name:'Legend',icon:'👑',minXP:6000,maxXP:Infinity},
+];
+
+const FAKE_USERS = [
+  {name:'Priya Sharma',emoji:'👩',xp:4820,quizzes:89,acc:91},
+  {name:'Arjun Verma',emoji:'👨',xp:4210,quizzes:76,acc:88},
+  {name:'Kavita Nair',emoji:'👩‍🦱',xp:3950,quizzes:71,acc:85},
+  {name:'Rajesh Kumar',emoji:'🧑',xp:3480,quizzes:65,acc:82},
+  {name:'Sneha Gupta',emoji:'👩‍🎓',xp:3120,quizzes:58,acc:79},
+  {name:'Vikram Singh',emoji:'🧔',xp:2890,quizzes:52,acc:83},
+  {name:'Ananya Joshi',emoji:'👩‍💼',xp:2540,quizzes:47,acc:77},
+  {name:'Deepak Rao',emoji:'👦',xp:2180,quizzes:40,acc:80},
+  {name:'Meena Pillai',emoji:'👩‍🏫',xp:1920,quizzes:35,acc:74},
+  {name:'Saurabh Das',emoji:'🧑‍💻',xp:1650,quizzes:30,acc:71},
+];
+
+const FEED_TEMPLATES = [
+  (u,s)=>`<strong>${u}</strong> scored ${s}% in GK`,
+  (u,s)=>`<strong>${u}</strong> completed History — ${s}%`,
+  (u,s)=>`<strong>${u}</strong> earned +${Math.round(s*0.8)} XP`,
+  (u,s)=>`<strong>${u}</strong> started a Speed Round`,
+  (u,s)=>`<strong>${u}</strong> unlocked a badge 🏅`,
+  (u,s)=>`<strong>${u}</strong> hit a 🔥 ${Math.floor(Math.random()*10+2)}-day streak`,
+];
+
+// ========================== STATE ==========================
+let S = JSON.parse(localStorage.getItem('govexam_state') || 'null') || {
+  xp: 0, streak: 0, lastPlayed: null, quizzesDone: 0,
+  totalCorrect: 0, totalAnswered: 0, totalXP: 0,
+  history: [], catAccuracy: {}, achievements: {},
+  flashcardsReviewed: 0, speedDone: 0, quizzesCreated: 0,
+  categoriesPlayed: new Set().toString(), bestStreak: 0,
+  bestCombo: 0,
+};
+if (typeof S.categoriesPlayed === 'string') S.categoriesPlayed = '[]';
+let userQuizzes = JSON.parse(localStorage.getItem('govexam_quizzes') || '[]');
+
+// QUIZ STATE
+let CQ = [], cqIdx = 0, cqAnswers = [], timerInt = null, tLeft = 30;
+let comboStreak = 0, quizStartTime = 0, quizMode = 'normal', quizCategory = '';
+let selectedCat = null, selectedDiff = 'easy', selectedCount = 5, quizMode2 = 'normal';
+
+// FC STATE
+let fcData = [], fcIdx = 0, fcCat = 'gk';
+
+// Q BUILDER
+let qCounter = 0;
+
+// ========================== SAVE ==========================
+function saveState() {
+  localStorage.setItem('govexam_state', JSON.stringify(S));
+  localStorage.setItem('govexam_quizzes', JSON.stringify(userQuizzes));
+}
+
+// ========================== STREAK ==========================
+function checkStreak() {
+  const today = new Date().toDateString();
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (S.lastPlayed === today) return;
+  if (S.lastPlayed === yesterday) {
+    S.streak++;
+  } else if (S.lastPlayed !== today) {
+    if (S.lastPlayed !== yesterday) S.streak = 1;
+  }
+  if (S.streak > S.bestStreak) S.bestStreak = S.streak;
+  S.lastPlayed = today;
+  saveState();
+}
+
+// ========================== XP & LEVEL ==========================
+function getLevel() {
+  const lvl = Math.floor(S.xp / 100) + 1;
+  return Math.min(lvl, 50);
+}
+function getXPInLevel() { return S.xp % 100; }
+function getRank() {
+  for (let i = RANKS.length-1; i >= 0; i--) {
+    if (S.xp >= RANKS[i].minXP) return RANKS[i];
+  }
+  return RANKS[0];
+}
+function addXP(amount, reason) {
+  S.xp += amount; S.totalXP += amount;
+  saveState();
+  updateHeaderXP();
+  showXPPopup('+' + amount + ' XP' + (reason ? ' — ' + reason : ''));
+}
+function showXPPopup(text) {
+  const p = document.getElementById('xp-popup');
+  p.textContent = text;
+  p.classList.add('show');
+  setTimeout(() => p.classList.remove('show'), 2500);
+}
+function updateHeaderXP() {
+  const lvl = getLevel();
+  document.getElementById('header-level').textContent = 'LVL ' + lvl;
+  document.getElementById('header-xp-fill').style.width = getXPInLevel() + '%';
+  document.getElementById('header-streak').textContent = '🔥 ' + S.streak + ' DAY';
+  // Drawer stats
+  const dxp = document.getElementById('drawer-xp');
+  const dstr = document.getElementById('drawer-streak');
+  const dlvl = document.getElementById('drawer-level');
+  if(dxp) dxp.textContent = S.xp;
+  if(dstr) dstr.textContent = S.streak + '🔥';
+  if(dlvl) dlvl.textContent = lvl;
+}
+
+// ========================== ACHIEVEMENTS ==========================
+function checkAchievements() {
+  const cats = JSON.parse(S.categoriesPlayed || '[]');
+  const acc = S.totalAnswered > 0 ? Math.round(S.totalCorrect/S.totalAnswered*100) : 0;
+  ACHIEVEMENTS_DEF.forEach(a => {
+    if (S.achievements[a.id]) return;
+    let unlocked = false;
+    if (a.type==='quizzes' && S.quizzesDone >= a.req) unlocked=true;
+    if (a.type==='streak' && S.streak >= a.req) unlocked=true;
+    if (a.type==='xp' && S.xp >= a.req) unlocked=true;
+    if (a.type==='speed' && S.speedDone >= a.req) unlocked=true;
+    if (a.type==='created' && S.quizzesCreated >= a.req) unlocked=true;
+    if (a.type==='flashcards' && S.flashcardsReviewed >= a.req) unlocked=true;
+    if (a.type==='categories' && cats.length >= a.req) unlocked=true;
+    if (a.type==='accuracy' && acc >= a.req && S.quizzesDone >= 5) unlocked=true;
+    if (a.type==='combo' && S.bestCombo >= a.req) unlocked=true;
+    if (unlocked) {
+      S.achievements[a.id] = true;
+      saveState();
+      notify(`🏅 Badge Unlocked: ${a.name}!`, 'success');
+    }
+  });
+}
+
+// ========================== DRAWER ==========================
+function toggleDrawer(){
+  const d = document.getElementById('mobile-drawer');
+  const h = document.getElementById('hamburger-btn');
+  d.classList.toggle('open');
+  h.classList.toggle('open');
+}
+function closeDrawer(){
+  document.getElementById('mobile-drawer').classList.remove('open');
+  document.getElementById('hamburger-btn').classList.remove('open');
+}
+// Close drawer on outside tap
+document.addEventListener('click', e => {
+  const drawer = document.getElementById('mobile-drawer');
+  const hbtn = document.getElementById('hamburger-btn');
+  if (drawer.classList.contains('open') && !drawer.contains(e.target) && !hbtn.contains(e.target)) {
+    closeDrawer();
+  }
+});
+
+// ========================== NAVIGATION ==========================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+
+  // Desktop nav
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const nm = {'home':'Home','quiz-setup':'Quiz','flashcards':'Cards','leaderboard':'Ranks','analytics':'Stats','achievements':'Badges','create':'Create','library':'Library','quiz':'','result':'','speed':''};
+  document.querySelectorAll('.nav-btn').forEach(b=>{if(b.textContent.trim()===nm[id])b.classList.add('active');});
+
+  // Drawer nav
+  document.querySelectorAll('.drawer-nav-btn').forEach(b=>b.classList.remove('active'));
+  const dBtn = document.getElementById('d-'+id);
+  if(dBtn) dBtn.classList.add('active');
+
+  // Bottom bar
+  document.querySelectorAll('.bb-btn').forEach(b=>b.classList.remove('active'));
+  const bbBtn = document.getElementById('bb-'+id);
+  if(bbBtn) bbBtn.classList.add('active');
+
+  // Scroll to top
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  if(id==='home') refreshHome();
+  if(id==='leaderboard') loadLB('global');
+  if(id==='analytics') loadAnalytics();
+  if(id==='achievements') loadAchievements();
+  if(id==='library') renderLibrary();
+  if(id==='flashcards') loadFlashcards();
+  if(id==='create') ensureCreateQuestion();
+}
+
+// ========================== HOME ==========================
+function refreshHome() {
+  updateHeaderXP();
+  document.getElementById('home-streak-disp').textContent = S.streak;
+  const acc = S.totalAnswered > 0 ? Math.round(S.totalCorrect/S.totalAnswered*100) : 0;
+  document.getElementById('h-xp').textContent = S.xp;
+  document.getElementById('h-accuracy').textContent = acc + '%';
+  const earned = Object.values(S.achievements).filter(Boolean).length;
+  document.getElementById('h-badges').textContent = earned;
+  // Leaderboard rank
+  const allUsers = [{name:'You',xp:S.xp},...FAKE_USERS].sort((a,b)=>b.xp-a.xp);
+  const rank = allUsers.findIndex(u=>u.name==='You') + 1;
+  document.getElementById('h-rank').textContent = '#'+rank;
+  // Daily challenge
+  const dailyTopics = ['UPSC Prelims Mock','Constitution Special','Economy Deep Dive','Indian History Blitz','Science & Tech Focus','Current Affairs Rapid'];
+  const dayIdx = new Date().getDay();
+  document.getElementById('daily-name').textContent = dailyTopics[dayIdx % dailyTopics.length];
+  // Mini leaderboard
+  const top3 = [...FAKE_USERS.slice(0,2),{name:'You',emoji:'👤',xp:S.xp,quizzes:S.quizzesDone,acc},FAKE_USERS[2]].sort((a,b)=>b.xp-a.xp).slice(0,3);
+  document.getElementById('mini-lb').innerHTML = top3.map((u,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;">
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:${i===0?'var(--accent)':i===1?'#9ca3af':'#cd7f32'};width:20px;">${i+1}</span>
+      <span style="font-size:16px;">${u.emoji||'👤'}</span>
+      <span style="flex:1;font-weight:600;color:${u.name==='You'?'var(--accent2)':'var(--text)'};">${u.name}</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);">${u.xp} XP</span>
+    </div>
+  `).join('');
+}
+
+// Countdown timer
+function updateDailyCountdown() {
+  const now = new Date();
+  const midnight = new Date(now); midnight.setHours(24,0,0,0);
+  const diff = midnight - now;
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  const el = document.getElementById('daily-countdown');
+  if (el) el.textContent = `Refreshes in: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+setInterval(updateDailyCountdown, 1000);
+updateDailyCountdown();
+
+// LIVE FEED
+const FEED_NAMES = ['Priya S.','Arjun V.','Ravi K.','Sneha G.','Kavita N.','Deepak R.','Meena P.','Raj T.','Ananya J.','Saurabh D.','Vikram S.','Leela M.'];
+function addFeedItem() {
+  const list = document.getElementById('feed-list');
+  if (!list) return;
+  const name = FEED_NAMES[Math.floor(Math.random()*FEED_NAMES.length)];
+  const score = Math.floor(Math.random()*30+65);
+  const tmpls = FEED_TEMPLATES;
+  const html = tmpls[Math.floor(Math.random()*tmpls.length)](name,score);
+  const avatars = ['📚','🎯','⚡','🔥','📋','🏆'];
+  const item = document.createElement('div');
+  item.className = 'feed-item';
+  item.innerHTML = `<div class="feed-avatar">${avatars[Math.floor(Math.random()*avatars.length)]}</div><span>${html}</span><span class="feed-score">${score}%</span>`;
+  list.insertBefore(item, list.firstChild);
+  while (list.children.length > 6) list.removeChild(list.lastChild);
+}
+setInterval(addFeedItem, 3500);
+addFeedItem(); addFeedItem(); addFeedItem();
+
+// ========================== QUIZ SETUP ==========================
+function renderSetupCategories() {
+  const g = document.getElementById('setup-categories');
+  g.innerHTML = CATS.map(c=>`
+    <div class="cat-card" onclick="pickSetupCat('${c.id}',this)">
+      <div class="cat-icon">${c.icon}</div>
+      <div class="cat-name">${c.name}</div>
+      <div class="cat-sub">${c.count} questions</div>
+      <div class="cat-mastery"><div class="cat-mastery-fill" style="width:${S.catAccuracy[c.id]||0}%"></div></div>
+    </div>
+  `).join('');
+}
+renderSetupCategories();
+
+function pickSetupCat(id, el) {
+  selectedCat = id;
+  document.querySelectorAll('#setup-categories .cat-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectChip(el, group, val) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel','easy','medium','hard'));
+  el.classList.add('sel');
+  if (group==='diff') { selectedDiff = val; if(['easy','medium','hard'].includes(val)) el.classList.add(val); }
+  if (group==='count') selectedCount = val;
+}
+
+function selectMode(mode, el) {
+  quizMode2 = mode;
+  document.querySelectorAll('[id^=mode-]').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+// ========================== LAUNCH QUIZ ==========================
+function startConfiguredQuiz() {
+  if (!selectedCat) { notify('Select a category first!','warning'); return; }
+  const bank = QB[selectedCat] || QB.gk;
+  let qs = [...bank].sort(()=>Math.random()-0.5).slice(0,Math.min(selectedCount,bank.length));
+  if (qs.length < selectedCount) {
+    qs = [...qs,...[...bank].sort(()=>Math.random()-0.5)].slice(0,selectedCount);
+  }
+  const catName = CATS.find(c=>c.id===selectedCat)?.name||selectedCat;
+  quizCategory = selectedCat;
+  launchQuiz(qs.slice(0,selectedCount), catName, 'AI Generated', 'normal');
+}
+
+function quickLaunch(cat, count, diff) {
+  selectedCat = cat;
+  const bank = QB[cat]||QB.gk;
+  const qs = [...bank].sort(()=>Math.random()-0.5).slice(0,count);
+  const catName = CATS.find(c=>c.id===cat)?.name||cat;
+  quizCategory = cat;
+  launchQuiz(qs, catName, 'Quick Play', 'normal');
+}
+
+function startQuickPlay() {
+  const cats = Object.keys(QB);
+  const cat = cats[Math.floor(Math.random()*cats.length)];
+  quickLaunch(cat, 10, 'medium');
+}
+
+function startDailyChallenge() {
+  const allQs = Object.values(QB).flat();
+  const qs = [...allQs].sort(()=>Math.random()-0.5).slice(0,20);
+  quizCategory = 'daily';
+  launchQuiz(qs, 'Daily Challenge', 'Special', 'normal');
+}
+
+function startSpeedRound() { showScreen('speed'); }
+function startSpeedQuiz() {
+  const allQs = Object.values(QB).flat();
+  const qs = [...allQs].sort(()=>Math.random()-0.5).slice(0,15);
+  document.getElementById('speed-intro').style.display='none';
+  document.getElementById('speed-quiz-area').style.display='block';
+  S.speedDone++; saveState(); checkAchievements();
+  quizCategory = 'speed';
+  launchQuiz(qs,'Speed Round','Speed','speed');
+}
+
+function launchQuiz(questions, catLabel, type, mode) {
+  CQ = questions; cqIdx = 0;
+  cqAnswers = Array(questions.length).fill(null);
+  comboStreak = 0; quizMode = mode;
+  quizStartTime = Date.now();
+  showScreen('quiz');
+  document.getElementById('quiz-loading').style.display='block';
+  document.getElementById('quiz-content').style.display='none';
+  document.getElementById('qc-cat').textContent = catLabel + ' · ' + type;
+  document.getElementById('qc-total').textContent = questions.length;
+  setTimeout(()=>{
+    document.getElementById('quiz-loading').style.display='none';
+    document.getElementById('quiz-content').style.display='block';
+    renderQ();
+  }, 900);
+  checkStreak();
+  // Track category
+  const cats = JSON.parse(S.categoriesPlayed||'[]');
+  if (quizCategory && !cats.includes(quizCategory)) { cats.push(quizCategory); S.categoriesPlayed=JSON.stringify(cats); saveState(); }
+}
+
+// ========================== QUIZ RENDER ==========================
+function renderQ() {
+  clearInterval(timerInt);
+  const q = CQ[cqIdx];
+  document.getElementById('qc-num').textContent = cqIdx+1;
+  document.getElementById('qc-meta-label').textContent = 'QUESTION '+String(cqIdx+1).padStart(2,'0');
+  document.getElementById('qc-text').textContent = q.q;
+  document.getElementById('quiz-pbar').style.width = ((cqIdx+1)/CQ.length*100)+'%';
+  document.getElementById('qc-exp').classList.remove('show');
+  document.getElementById('qc-next').disabled = true;
+  document.getElementById('combo-count').textContent = comboStreak;
+  document.getElementById('combo-fire').textContent = comboStreak >= 3 ? '🔥' : comboStreak >= 2 ? '✨' : '';
+
+  const opts = document.getElementById('qc-options');
+  opts.innerHTML = q.opts.map((o,i)=>`
+    <div class="opt" onclick="pickAnswer(${i})">
+      <span class="opt-key">${'ABCD'[i]}</span>
+      <span>${o}</span>
+    </div>
+  `).join('');
+
+  // Timer
+  const isSpeed = quizMode==='speed';
+  const timeLimit = isSpeed ? 10 : 30;
+  tLeft = timeLimit;
+  const timerEl = document.getElementById('qc-timer');
+  const circleEl = document.getElementById('timer-circle-progress');
+  const circ = 125.6;
+  timerEl.textContent = tLeft;
+  timerEl.style.color = 'var(--text)';
+  circleEl.style.stroke = 'var(--accent)';
+  circleEl.style.strokeDashoffset = '0';
+
+  timerInt = setInterval(()=>{
+    tLeft--;
+    timerEl.textContent = tLeft;
+    const pct = tLeft / timeLimit;
+    circleEl.style.strokeDashoffset = String(circ * (1-pct));
+    if (pct < 0.5) { timerEl.style.color='var(--accent)'; circleEl.style.stroke='var(--accent)'; }
+    if (pct < 0.25) { timerEl.style.color='var(--danger)'; circleEl.style.stroke='var(--danger)'; }
+    if (tLeft <= 0) { clearInterval(timerInt); autoSkipQ(); }
+  }, 1000);
+}
+
+function autoSkipQ() {
+  disableOpts();
+  const q = CQ[cqIdx];
+  document.querySelectorAll('.opt')[q.ans].classList.add('correct');
+  comboStreak = 0;
+  showExpBox();
+  document.getElementById('qc-next').disabled = false;
+  S.totalAnswered++;
+  saveState();
+}
+
+function pickAnswer(idx) {
+  if (document.querySelectorAll('.opt')[0].classList.contains('disabled')) return;
+  clearInterval(timerInt);
+  cqAnswers[cqIdx] = idx;
+  const q = CQ[cqIdx];
+  const correct = idx === q.ans;
+  disableOpts();
+  document.querySelectorAll('.opt').forEach((o,i)=>{
+    if(i===q.ans) o.classList.add('correct');
+    else if(i===idx&&!correct) o.classList.add('wrong');
+  });
+  S.totalAnswered++;
+  if (correct) {
+    S.totalCorrect++;
+    comboStreak++;
+    if (comboStreak > S.bestCombo) S.bestCombo = comboStreak;
+    if (comboStreak === 3||comboStreak===5||comboStreak===10) showComboPopup(comboStreak);
+  } else {
+    comboStreak = 0;
+  }
+  document.getElementById('combo-count').textContent = comboStreak;
+  document.getElementById('combo-fire').textContent = comboStreak>=3?'🔥':comboStreak>=2?'✨':'';
+  showExpBox();
+  document.getElementById('qc-next').disabled = false;
+  saveState();
+}
+
+function disableOpts() {
+  document.querySelectorAll('.opt').forEach(o=>o.classList.add('disabled'));
+}
+function showExpBox() {
+  const q = CQ[cqIdx];
+  const expOn = document.getElementById('s-exp')?.classList.contains('on');
+  if (q.exp && (expOn !== false)) {
+    document.getElementById('qc-exp-text').textContent = q.exp;
+    document.getElementById('qc-exp').classList.add('show');
   }
 }
+
+function showComboPopup(n) {
+  const p = document.getElementById('combo-popup');
+  document.getElementById('combo-popup-val').textContent = '🔥 '+n+'×';
+  p.classList.add('show');
+  setTimeout(()=>p.classList.remove('show'),1800);
+}
+
+function nextQuestion() {
+  cqIdx++;
+  if (cqIdx >= CQ.length) { endQuiz(); return; }
+  renderQ();
+}
+
+function quitQuiz() {
+  clearInterval(timerInt);
+  if (confirm('Quit the quiz? Progress will be lost.')) showScreen('home');
+}
+
+// ========================== RESULTS ==========================
+function endQuiz() {
+  clearInterval(timerInt);
+  let correct=0,wrong=0,skipped=0;
+  CQ.forEach((q,i)=>{
+    if(cqAnswers[i]===null) skipped++;
+    else if(cqAnswers[i]===q.ans) correct++;
+    else wrong++;
+  });
+  const total = CQ.length;
+  const pct = Math.round(correct/total*100);
+  const pass = pct >= 60;
+  const timeTaken = Math.round((Date.now()-quizStartTime)/1000);
+  // XP calc
+  let xpEarned = correct * 10;
+  if (pct===100) xpEarned += 50;
+  if (comboStreak >= 5) xpEarned += 30;
+  if (quizMode==='speed') xpEarned *= 2;
+  // Cat accuracy
+  if (quizCategory && quizCategory!=='speed'&&quizCategory!=='daily') {
+    S.catAccuracy[quizCategory] = Math.round((S.catAccuracy[quizCategory]||0)*0.6 + pct*0.4);
+  }
+  S.quizzesDone++;
+  S.history.push({pct,correct,wrong,skipped,time:timeTaken,date:new Date().toLocaleDateString()});
+  if (S.history.length > 20) S.history = S.history.slice(-20);
+  addXP(xpEarned,'Quiz completed');
+  checkAchievements();
+  saveState();
+
+  // Render results
+  showScreen('result');
+  const scoreEl = document.getElementById('r-score');
+  scoreEl.textContent = pct;
+  scoreEl.className = 'score-num '+(pass?'pass':'fail');
+  document.getElementById('result-bg-text').textContent = pass?'PASS':'FAIL';
+  document.getElementById('r-status').textContent = pass?'✔ QUALIFIED':'✖ NOT QUALIFIED';
+  document.getElementById('r-status').style.color = pass?'var(--success)':'var(--danger)';
+  document.getElementById('r-xp-earned').textContent = '+'+xpEarned+' XP EARNED';
+  document.getElementById('r-correct').textContent = correct;
+  document.getElementById('r-wrong').textContent = wrong;
+  document.getElementById('r-skipped').textContent = skipped;
+  document.getElementById('r-time').textContent = timeTaken+'s';
+
+  // New badges in results
+  const newBadges = ACHIEVEMENTS_DEF.filter(a=>S.achievements[a.id]).slice(-3);
+  document.getElementById('r-badges').innerHTML = newBadges.map((a,i)=>`
+    <div class="badge-item" style="animation-delay:${i*0.15}s">
+      <div class="badge-icon">${a.icon}</div>
+      <div class="badge-name">${a.name}</div>
+    </div>
+  `).join('');
+
+  // Review
+  document.getElementById('r-review').innerHTML = CQ.map((q,i)=>{
+    const ua = cqAnswers[i]; const iscorr = ua===q.ans;
+    return `
+      <div style="background:var(--surface);border:1px solid ${ua===null?'var(--border)':iscorr?'var(--success)':'var(--danger)'};padding:16px;border-left-width:3px;">
+        <div style="font-size:14px;margin-bottom:8px;"><strong>Q${i+1}.</strong> ${q.q}</div>
+        ${ua!==null?`<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:${iscorr?'var(--success)':'var(--danger)'};">Your: ${q.opts[ua]}</div>`:'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:var(--muted);">Skipped (Time Out)</div>'}
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--success);">✓ ${q.opts[q.ans]}</div>
+        ${q.exp?`<div style="font-size:12px;color:var(--muted2);margin-top:6px;line-height:1.5;">${q.exp}</div>`:''}
+      </div>
+    `;
+  }).join('');
+}
+
+function shareResult() {
+  notify('📋 Result link copied to clipboard!','success');
+}
+
+// ========================== LEADERBOARD ==========================
+function loadLB(type, btn) {
+  if (btn) {
+    document.querySelectorAll('.lb-header .chip').forEach(b=>b.classList.remove('sel'));
+    btn.classList.add('sel');
+  }
+  const myXP = type==='today' ? Math.floor(S.xp*0.1) : type==='weekly' ? Math.floor(S.xp*0.3) : S.xp;
+  const acc = S.totalAnswered>0?Math.round(S.totalCorrect/S.totalAnswered*100):0;
+  const me = {name:'You (Me)',emoji:'👤',xp:myXP,quizzes:S.quizzesDone,acc,isYou:true};
+  let others = FAKE_USERS.map(u=>({...u, xp: type==='today'?Math.floor(u.xp*0.05+Math.random()*50):type==='weekly'?Math.floor(u.xp*0.25+Math.random()*200):u.xp}));
+  const all = [...others, me].sort((a,b)=>b.xp-a.xp);
+  const grid = document.getElementById('lb-grid');
+  grid.innerHTML = all.map((u,i)=>{
+    const cls = i===0?'top1':i===1?'top2':i===2?'top3':'';
+    const youCls = u.isYou?'is-you':'';
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
+    return `
+      <div class="lb-row ${cls} ${youCls}">
+        <div class="lb-rank">${medal}</div>
+        <div class="lb-avatar">${u.emoji}</div>
+        <div class="lb-info">
+          <div class="lb-name">${u.name}${u.isYou?'<span class="lb-you-tag">YOU</span>':''}</div>
+          <div class="lb-meta">${u.quizzes} quizzes · ${u.acc}% accuracy</div>
+        </div>
+        <div>
+          <div class="lb-score">${u.xp}</div>
+          <div class="lb-level">XP</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ========================== ANALYTICS ==========================
+function loadAnalytics() {
+  const acc = S.totalAnswered>0?Math.round(S.totalCorrect/S.totalAnswered*100):0;
+  document.getElementById('an-total').textContent = S.quizzesDone;
+  document.getElementById('an-accuracy').textContent = acc+'%';
+  document.getElementById('an-streak').textContent = S.bestStreak;
+  document.getElementById('an-xp').textContent = S.xp;
+  document.getElementById('an-correct-c').textContent = S.totalCorrect;
+  document.getElementById('an-wrong-c').textContent = S.totalAnswered-S.totalCorrect;
+  document.getElementById('an-skip-c').textContent = 0;
+
+  // Cat chart
+  const cats = CATS.slice(0,6);
+  document.getElementById('an-cat-chart').innerHTML = cats.map(c=>{
+    const pct = S.catAccuracy[c.id]||Math.floor(Math.random()*60+30);
+    const color = pct>75?'var(--success)':pct>50?'var(--accent)':'var(--danger)';
+    return `<div class="bar-row">
+      <span class="bar-label">${c.name.slice(0,8)}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color};"></div></div>
+      <span class="bar-val">${pct}%</span>
+    </div>`;
+  }).join('');
+
+  // Trend
+  const trend = S.history.length>0?S.history.slice(-10).map(h=>h.pct):[45,60,55,70,65,75,80,72,85,90];
+  document.getElementById('an-trend').innerHTML = trend.map(v=>`<div class="trend-bar" style="height:${v}%;"></div>`).join('');
+
+  // Heatmap
+  document.getElementById('an-heatmap').innerHTML = Array.from({length:30},(_,i)=>{
+    const l = Math.floor(Math.random()*5);
+    return `<div class="heat-cell ${l>0?'l'+l:''}" title="Day ${i+1}"></div>`;
+  }).join('');
+
+  // Weak areas
+  const weakAreas = CATS.slice(0,4).map(c=>({name:c.name,acc:S.catAccuracy[c.id]||Math.floor(Math.random()*40+20)})).sort((a,b)=>a.acc-b.acc).slice(0,4);
+  document.getElementById('an-weak').innerHTML = weakAreas.map(w=>`
+    <div class="weak-item">
+      <span class="weak-name">${w.name}</span>
+      <span class="weak-acc">${w.acc}%</span>
+    </div>
+  `).join('');
+}
+
+// ========================== ACHIEVEMENTS ==========================
+function loadAchievements() {
+  const earned = ACHIEVEMENTS_DEF.filter(a=>S.achievements[a.id]).length;
+  document.getElementById('ach-earned').textContent = earned;
+  document.getElementById('ach-total').textContent = ACHIEVEMENTS_DEF.length;
+  document.getElementById('ach-pct').textContent = Math.round(earned/ACHIEVEMENTS_DEF.length*100)+'%';
+  const acc = S.totalAnswered>0?Math.round(S.totalCorrect/S.totalAnswered*100):0;
+  const cats = JSON.parse(S.categoriesPlayed||'[]');
+  document.getElementById('ach-grid').innerHTML = ACHIEVEMENTS_DEF.map(a=>{
+    const unlocked = !!S.achievements[a.id];
+    let progress = 0;
+    if (a.type==='quizzes') progress=Math.min(100,S.quizzesDone/a.req*100);
+    if (a.type==='streak') progress=Math.min(100,S.streak/a.req*100);
+    if (a.type==='xp') progress=Math.min(100,S.xp/a.req*100);
+    if (a.type==='categories') progress=Math.min(100,cats.length/a.req*100);
+    if (a.type==='accuracy') progress=Math.min(100,acc/a.req*100);
+    if (a.type==='combo') progress=Math.min(100,S.bestCombo/a.req*100);
+    return `
+      <div class="ach-card ${unlocked?'unlocked':'locked'}">
+        <span class="ach-icon">${a.icon}</span>
+        <div class="ach-name">${a.name}</div>
+        <div class="ach-desc">${a.desc}</div>
+        <div class="ach-progress-bar"><div class="ach-progress-fill" style="width:${unlocked?100:progress}%"></div></div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ========================== FLASHCARDS ==========================
+function selectFCCat(cat, el) {
+  fcCat = cat;
+  document.querySelectorAll('#fc-chips .chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  loadFlashcards();
+}
+
+function loadFlashcards() {
+  fcData = FLASHCARD_DATA[fcCat]||FLASHCARD_DATA.gk;
+  fcIdx = 0;
+  renderFC();
+}
+
+function renderFC() {
+  const card = fcData[fcIdx];
+  document.getElementById('fc-question').textContent = card.q;
+  document.getElementById('fc-answer').textContent = card.a;
+  document.getElementById('fc-hint').textContent = card.hint ? 'Hint: '+card.hint : '';
+  document.getElementById('fc-progress').textContent = 'Card '+(fcIdx+1)+' of '+fcData.length;
+  document.getElementById('flashcard').classList.remove('flip');
+}
+
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flip');
+}
+
+function fcRate(rating) {
+  S.flashcardsReviewed++;
+  const xpMap = {easy:5,ok:8,hard:12};
+  addXP(xpMap[rating]||5,'Flashcard');
+  checkAchievements();
+  fcNext();
+}
+
+function fcNext() {
+  fcIdx = (fcIdx+1) % fcData.length;
+  renderFC();
+}
+function fcPrev() {
+  fcIdx = (fcIdx-1+fcData.length) % fcData.length;
+  renderFC();
+}
+
+// ========================== CREATE QUIZ ==========================
+function ensureCreateQuestion() {
+  if (document.getElementById('c-questions').children.length===0) addQuestion();
+}
+
+function addQuestion() {
+  qCounter++;
+  const qc = qCounter;
+  const div = document.createElement('div');
+  div.className = 'qb'; div.id='qb-'+qc;
+  div.innerHTML=`
+    <div class="qb-header"><span class="qb-num">QUESTION ${document.getElementById('c-questions').children.length+1}</span><button class="qb-del" onclick="removeQ('qb-${qc}')">×</button></div>
+    <div class="form-group"><label class="form-label">Question</label><textarea placeholder="Enter question text..."></textarea></div>
+    <div class="opts-grid">${['A','B','C','D'].map(l=>`
+      <div class="opt-input-row">
+        <input type="radio" name="c-${qc}" value="${l}" id="cr-${qc}-${l}">
+        <label for="cr-${qc}-${l}" class="opt-lbl">${l}</label>
+        <input type="text" placeholder="Option ${l}">
+      </div>`).join('')}
+    </div>
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:10px;letter-spacing:1px;">SELECT RADIO = CORRECT ANSWER</div>
+    <div class="form-group"><label class="form-label">Explanation (optional)</label><input type="text" placeholder="Why is this the correct answer?"></div>
+  `;
+  document.getElementById('c-questions').appendChild(div);
+}
+
+function removeQ(id) {
+  document.getElementById(id)?.remove();
+  document.querySelectorAll('.qb').forEach((el,i)=>el.querySelector('.qb-num').textContent='QUESTION '+(i+1));
+}
+
+function saveQuiz() {
+  const title = document.getElementById('c-title').value.trim();
+  if (!title) { notify('Enter a quiz title!','warning'); return; }
+  const builders = document.querySelectorAll('.qb');
+  if (!builders.length) { notify('Add at least one question!','warning'); return; }
+  const questions = [];
+  let valid = true;
+  builders.forEach((b,idx)=>{
+    const qtext = b.querySelector('textarea').value.trim();
+    const ois = b.querySelectorAll('.opt-input-row input[type=text]');
+    const opts = Array.from(ois).map(i=>i.value.trim());
+    const radio = b.querySelector('input[type=radio]:checked');
+    const exp = b.querySelectorAll('input[type=text]')[4]?.value.trim()||'';
+    if (!qtext||opts.some(o=>!o)||!radio) { valid=false; notify(`Q${idx+1}: Complete all fields!`,'error'); return; }
+    questions.push({q:qtext,opts,ans:{A:0,B:1,C:2,D:3}[radio.value],exp});
+  });
+  if (!valid) return;
+  const quiz = {id:Date.now(),title,category:document.getElementById('c-cat').value,difficulty:document.getElementById('c-diff').value,questions,type:'user',created:new Date().toLocaleDateString()};
+  userQuizzes.unshift(quiz);
+  S.quizzesCreated++;
+  saveState(); checkAchievements();
+  document.getElementById('c-title').value='';
+  document.getElementById('c-questions').innerHTML='';
+  qCounter=0; addQuestion();
+  document.getElementById('lib-dot').style.display='block';
+  notify('✅ Quiz saved to Library!','success');
+}
+
+// ========================== LIBRARY ==========================
+function filterLibrary(type, btn) {
+  document.querySelectorAll('.lib-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderLibrary(type);
+}
+
+function renderLibrary(filter='all') {
+  const filtered = userQuizzes.filter(q=>filter==='all'||q.type===filter);
+  const lib = document.getElementById('library-content');
+  if (!filtered.length) {
+    lib.innerHTML='<div style="text-align:center;padding:60px 0;color:var(--muted);font-family:\'IBM Plex Mono\',monospace;font-size:12px;letter-spacing:3px;">NO QUIZZES FOUND</div>';
+    return;
+  }
+  lib.innerHTML='<div class="quiz-list">'+filtered.map(q=>`
+    <div class="quiz-row">
+      <div>
+        <div class="quiz-row-title">${q.title}</div>
+        <div class="quiz-row-meta"><span>${q.questions.length} Q</span><span>${q.category}</span><span>${q.created}</span></div>
+        <div style="margin-top:6px;display:flex;gap:6px;">
+          <span class="tag tag-${q.type}">${q.type==='ai'?'AI':'User'}</span>
+          <span class="tag tag-${q.difficulty}">${q.difficulty}</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+        <button class="btn btn-primary btn-sm" onclick="playUserQuiz(${q.id})">Play →</button>
+        <button class="btn btn-secondary btn-sm" style="font-size:9px;padding:5px 10px;" onclick="delQuiz(${q.id})">Delete</button>
+      </div>
+    </div>
+  `).join('')+'</div>';
+}
+
+function playUserQuiz(id) {
+  const quiz = userQuizzes.find(q=>q.id===id);
+  if (!quiz) return;
+  quizCategory = quiz.category?.toLowerCase()||'gk';
+  launchQuiz(quiz.questions, quiz.category, 'User Created', 'normal');
+}
+
+function delQuiz(id) {
+  if (!confirm('Delete this quiz?')) return;
+  userQuizzes = userQuizzes.filter(q=>q.id!==id);
+  saveState(); renderLibrary();
+  notify('Quiz deleted','warning');
+}
+
+// ========================== PROFILE MODAL ==========================
+function openModal() {
+  updateHeaderXP();
+  const rank = getRank();
+  document.getElementById('modal-rank-icon').textContent = rank.icon;
+  document.getElementById('modal-rank-name').textContent = rank.name.toUpperCase();
+  const nextRank = RANKS[RANKS.indexOf(rank)+1];
+  document.getElementById('modal-rank-next').textContent = nextRank ? `${nextRank.minXP - S.xp} XP to ${nextRank.name}` : 'MAX RANK!';
+  const xpPct = nextRank ? ((S.xp-rank.minXP)/(nextRank.minXP-rank.minXP)*100) : 100;
+  document.getElementById('modal-xp-fill').style.width = xpPct+'%';
+  document.getElementById('mp-xp').textContent = S.xp;
+  document.getElementById('mp-streak').textContent = S.streak;
+  document.getElementById('mp-quizzes').textContent = S.quizzesDone;
+  const acc = S.totalAnswered>0?Math.round(S.totalCorrect/S.totalAnswered*100):0;
+  document.getElementById('mp-accuracy').textContent = acc+'%';
+  const earned = ACHIEVEMENTS_DEF.filter(a=>S.achievements[a.id]);
+  document.getElementById('modal-badges').innerHTML = earned.map(a=>`<div title="${a.name}" style="font-size:24px;cursor:help;">${a.icon}</div>`).join('')||'<div style="color:var(--muted);font-size:12px;font-family:\'IBM Plex Mono\',monospace;">No badges yet — start playing!</div>';
+  document.getElementById('profile-modal').classList.add('open');
+}
+function closeModal() { document.getElementById('profile-modal').classList.remove('open'); }
+
+// ========================== NOTIFICATIONS ==========================
+function notify(msg, type='') {
+  const n = document.createElement('div');
+  n.className = 'notif '+type;
+  n.textContent = msg;
+  document.body.appendChild(n);
+  setTimeout(()=>{ n.style.transform='translateX(120%)'; setTimeout(()=>n.remove(),300); }, 3000);
+}
+
+// ========================== INIT ==========================
+checkStreak();
+updateHeaderXP();
+refreshHome();
+loadFlashcards();
+
+// Simulate XP for demo if new user
+if (S.xp===0 && S.quizzesDone===0) {
+  setTimeout(()=>notify('👋 Welcome! Complete quizzes to earn XP and climb the leaderboard.',''),1500);
+}
+
+// Simulate random XP ticks for demo (remove in prod)
+// setInterval(()=>{ S.xp+=Math.floor(Math.random()*3); saveState(); updateHeaderXP(); }, 10000);
+</script>
+</body>
+</html>
